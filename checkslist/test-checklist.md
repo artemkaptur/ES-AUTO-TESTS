@@ -1,0 +1,1 @@
+1. Check that application is available. (severity - 3)
