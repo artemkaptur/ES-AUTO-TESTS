@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'application'
+	id 'idea'
+	id 'eclipse'
+}
+
+ext {
+  junitVersion ='5.2.0'
+}
+
+mainClassName = 'App'
+
+dependencies {
+    compile 'com.google.guava:guava:23.0'
+
+    testCompile(group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion)
+    testCompile(group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: junitVersion)
+    testCompile(group: 'org.junit.jupiter', name: 'junit-jupiter-migrationsupport', version: junitVersion)
+    testRuntimeOnly(group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion)
+}
+
+repositories {
+    jcenter()
+}
