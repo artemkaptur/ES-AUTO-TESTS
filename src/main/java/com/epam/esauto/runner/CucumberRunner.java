@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(format = {"pretty", "json:out/cucumber.json","html:out/cucumber.html"},
-        features = "src/test/resources/features/", glue = "com/epam/esauto/")
+        features = "src/test/resources/features/", glue = "com/epam/esauto/cucumber/")
 public class CucumberRunner {
 
 }

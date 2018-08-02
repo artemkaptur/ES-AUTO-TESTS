@@ -1,4 +1,4 @@
-package com.epam.esauto.steps;
+package com.epam.esauto.cucumber.steps;
 
 import com.epam.esauto.actions.INavigateActions;
 import com.epam.esauto.pages.home.MainPage;
