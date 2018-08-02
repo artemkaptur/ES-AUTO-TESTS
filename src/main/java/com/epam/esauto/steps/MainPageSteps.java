@@ -1,6 +1,5 @@
 package com.epam.esauto.steps;
 
-
 import com.epam.esauto.actions.INavigateActions;
 import com.epam.esauto.pages.home.MainPage;
 import com.epam.esauto.spring.AppConfig;

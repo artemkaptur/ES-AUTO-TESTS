@@ -1,10 +1,11 @@
 package com.epam.esauto.driver;
 
-import java.util.Optional;
-
+import cucumber.api.java.After;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class DriverProvider implements IDriverProvider {
@@ -21,5 +22,10 @@ public class DriverProvider implements IDriverProvider {
             driverCache.set(Optional.of(driver));
             return driver;
         });
+    }
+
+    @After
+    public void close() {
+        System.out.println("closed");
     }
 }
