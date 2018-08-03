@@ -6,4 +6,5 @@ public interface IDriverProvider {
 
     WebDriver get();
 
+    void removeDriver();
 }
