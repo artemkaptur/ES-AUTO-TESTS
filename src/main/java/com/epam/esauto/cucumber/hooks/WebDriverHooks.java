@@ -11,6 +11,6 @@ public class WebDriverHooks {
 
     @After
     public void afterScenario() {
-        driver.get().close();
+        driver.removeDriver();
     }
 }

@@ -5,4 +5,6 @@ import org.openqa.selenium.WebDriver;
 public interface IDriverProvider {
 
     WebDriver get();
+
+    void removeDriver();
 }

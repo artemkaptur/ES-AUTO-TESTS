@@ -22,4 +22,10 @@ public class DriverProvider implements IDriverProvider {
             return driver;
         });
     }
+
+    @Override
+    public void removeDriver() {
+        driverCache.get().ifPresent(WebDriver::quit);
+        driverCache.set(null);
+    }
 }
