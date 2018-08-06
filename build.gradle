@@ -21,9 +21,9 @@ dependencies {
     compile(group: 'info.cukes', name: 'cucumber-html', version: '0.2.6')
     compile(group: 'org.springframework', name: 'spring-context', version: springVersion)
     compile(group: 'org.springframework', name: 'spring-test', version: springVersion)
-    compile(group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '2.2.4')
     compile(group: 'org.seleniumhq.selenium', name: 'selenium-server', version: '3.11.0')
     compile(group: 'junit', name: 'junit', version: '4.12')
+    compile(group: 'com.codeborne', name: 'selenide', version: '4.12.3')
     compileOnly(group: 'info.cukes', name: 'gherkin', version: '2.12.2')
 }
 
