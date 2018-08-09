@@ -157,5 +157,3 @@ Feature: Evening Standard profile editing positive tests
     And I open login form
     And I fill login form with old credentials
     Then I see warning login message
-
-

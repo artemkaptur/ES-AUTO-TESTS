@@ -3,7 +3,6 @@ Feature: Evening standard registration positive tests
 #I want to be able register
 #So that i can get all functionality of application
 
-#recurrent actions go below - in "Background section"
   Background:
     Given I open the main page
     Given I click register button

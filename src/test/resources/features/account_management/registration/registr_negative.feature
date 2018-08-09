@@ -3,7 +3,6 @@ Feature: Evening standard registration negative tests
 #I want to be sure that nobody can register with already used email
 #So that there wouldn't be any conflicts in user's data base
 
-#recurrent actions go below - in "Background section"
   Background:
     Given I open the main page
     Given I click register button
