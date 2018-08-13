@@ -1,0 +1,50 @@
+{
+  "YANDEX_MAIL_USER": {
+    "esLogin": "estestuser4@yandex.by",
+    "esPassword": "test1234",
+    "mailLogin": "estestuser4@yandex.by",
+    "mailPassword": "test1234"
+  },
+  "GMAIL_MAIL_USER": {
+    "esLogin": "estestuser2@gmail.com",
+    "esPassword": "1234test1234",
+    "mailLogin": "estestuser2@gmail.com",
+    "mailPassword": "1234test1234"
+  },
+  "GMAIL_MAIL_USER2": {
+    "esLogin": "tester.testerovka@gmail.com",
+    "esPassword": "tester.testerovka2018",
+    "mailLogin": "tester.testerovka@gmail.com",
+    "mailPassword": "tester.testerovka2018"
+  },
+  "MAILRU_MAIL_USER": {
+    "esLogin": "etestuser3@mail.ru",
+    "esPassword": "test1234",
+    "mailLogin": "etestuser3@mail.ru",
+    "mailPassword": "qwerty123456"
+  },
+  "REGISTERED_USER_CORRECT_EMAIL_WRONG_PASSWORD": {
+    "esLogin": "estestuser4@yandex.by",
+    "esPassword": "test0000",
+    "mailLogin": "estestuser4@yandex.by",
+    "mailPassword": "test1234"
+  },
+  "REGISTERED_USER_WRONG_EMAIL_CORRECT_PASSWORD": {
+    "esLogin": "estestuser000@yandex.by",
+    "esPassword": "test1234",
+    "mailLogin": "estestuser4@yandex.by",
+    "mailPassword": "test1234"
+  },
+  "UNREGISTERED_USER_WRONG_EMAIL_WRONG_PASSWORD": {
+    "esLogin": "Jjjjjjjjjjjj@gmail.com",
+    "esPassword": "test0000",
+    "mailLogin": "none",
+    "mailPassword": "none"
+  },
+  "UNREGISTERED_USER_WRONG_EMAIL_EXISTED_PASSWORD": {
+    "esLogin": "Jjjjjjjjjjjj@gmail.com",
+    "esPassword": "test1234",
+    "mailLogin": "none",
+    "mailPassword": "none"
+  }
+}

@@ -1,15 +1,18 @@
 package com.epam.esauto.steps;
 
-import com.codeborne.selenide.Condition;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.switchTo;
+
+import com.codeborne.selenide.SelenideElement;
 import com.epam.esauto.spring.AppConfig;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
-
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
 
 @ContextConfiguration(classes = AppConfig.class)
 public class MainPageSteps {
@@ -20,6 +23,18 @@ public class MainPageSteps {
     @Value("${mainPage.logo.xpath}")
     private String mainPageLogoXpath;
 
+    @Value("${mainPage.user.btn.xpath}")
+    private String userBtnXpath;
+
+    @Value("${mainPage.login.btn.xpath}")
+    private String loginBtnXpath;
+
+    @Value("${mainPage.logout.btn.xpath}")
+    private String logoutBtnXpath;
+
+    @Value("${mainPage.registration.btn.xpath}")
+    private String registrationBtnXpath;
+
     @Given("^I open the main page$")
     public void iOpenTheMainPage() {
         open(mainPageUrl);
@@ -27,6 +42,44 @@ public class MainPageSteps {
 
     @Then("^main logo is displayed$")
     public void mainLogoIsDisplayed() {
-        $(By.xpath(mainPageLogoXpath)).shouldBe(Condition.visible);
+        $(By.xpath(mainPageLogoXpath)).shouldBe(visible);
+    }
+
+    @And("^click logout button$")
+    public void clickLogoutButton() {
+        clickOnUserBtnAndGetLogoutBtn().click();
+    }
+
+    @Then("^logout button doesn't exist$")
+    public void logoutButtonDoesntExist() {
+        clickOnUserBtnAndGetLogoutBtn().shouldNotBe(visible);
+    }
+
+    @Then("^login button is displayed$")
+    public void loginButtonIsDisplayed() {
+        $(By.xpath(userBtnXpath)).click();
+        $(By.xpath(loginBtnXpath)).shouldBe(visible);
+    }
+
+    @Then("^I open login form$")
+    public void iOpenLoginForm() {
+        $(By.xpath(loginBtnXpath)).click();
+        switchTo().window(1);
+    }
+
+    @Given("^I click register button$")
+    public void iClickRegisterButton() {
+        $(By.xpath(userBtnXpath)).click();
+        $(By.xpath(registrationBtnXpath)).click();
+    }
+
+    @Then("^logout button exists$")
+    public void logoutButtonExists() {
+        clickOnUserBtnAndGetLogoutBtn().shouldBe(visible);
+    }
+
+    public SelenideElement clickOnUserBtnAndGetLogoutBtn() {
+        $(By.xpath(userBtnXpath)).click();
+        return $(By.xpath(logoutBtnXpath));
     }
 }

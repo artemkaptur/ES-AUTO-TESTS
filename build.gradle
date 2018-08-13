@@ -1,13 +1,13 @@
 plugins {
     id 'java'
     id 'application'
-	id 'idea'
-	id 'eclipse'
+    id 'idea'
+    id 'eclipse'
 }
 
 ext {
-  cucumberVersion = '1.2.5'
-  springVersion = '5.0.7.RELEASE'
+    cucumberVersion = '1.2.5'
+    springVersion = '5.0.7.RELEASE'
 }
 
 mainClassName = 'App'

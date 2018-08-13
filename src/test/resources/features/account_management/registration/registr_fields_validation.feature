@@ -3,7 +3,6 @@ Feature: Evening standard registration fields validation
 #I want to receive warning messages
 #So that i can easily rewrite wrong values
 
-#recurrent actions go below - in "Background section"
   Background:
     Given I open the main page
     Given I click register button
