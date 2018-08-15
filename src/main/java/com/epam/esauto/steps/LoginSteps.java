@@ -1,18 +1,18 @@
 package com.epam.esauto.steps;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.switchTo;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static com.epam.esauto.entity.UserProvider.getUser;
-
 import com.epam.esauto.entity.User;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
+
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.epam.esauto.entity.UserProvider.getUser;
 
 public class LoginSteps {
     private static final int LOGIN_FORM_SUBMIT_TIMEOUT = 12000;

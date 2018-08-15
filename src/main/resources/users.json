@@ -11,6 +11,18 @@
     "mailLogin": "estestuser2@gmail.com",
     "mailPassword": "1234test1234"
   },
+  "GMAIL_MAIL_USER_NEW_PASSWORD": {
+    "esLogin": "estestuser2@gmail.com",
+    "esPassword": "1234test1234test",
+    "mailLogin": "estestuser2@gmail.com",
+    "mailPassword": "1234test1234"
+  },
+  "GMAIL_MAIL_USER_NEW_EMAIL": {
+    "esLogin": "jixerion@mail.ru",
+    "esPassword": "1234test1234test",
+    "mailLogin": "estestuser2@gmail.com",
+    "mailPassword": "1234test1234"
+  },
   "GMAIL_MAIL_USER2": {
     "esLogin": "tester.testerovka@gmail.com",
     "esPassword": "tester.testerovka2018",
