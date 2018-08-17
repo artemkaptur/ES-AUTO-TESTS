@@ -11,6 +11,8 @@ ext {
 }
 
 mainClassName = 'App'
+sourceCompatibility = JavaVersion.VERSION_1_10
+targetCompatibility = JavaVersion.VERSION_1_10
 
 dependencies {
     compile 'com.google.guava:guava:23.0'
