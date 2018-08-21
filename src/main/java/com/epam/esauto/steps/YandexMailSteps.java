@@ -4,6 +4,7 @@ import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.codeborne.selenide.WebDriverRunner.url;
 import static com.epam.esauto.entity.UserProvider.getUser;
+import static com.codeborne.selenide.Condition.*;
 
 import cucumber.api.java.en.And;
 import org.junit.Assert;
@@ -39,6 +40,9 @@ public class YandexMailSteps {
     @Value("${yandexAccountPage.goToMail.btn.xpath}")
     private String yandexGoToMailBtnXpath;
 
+    @Value("${yandexMessages.resetPassword.letter.xpath}")
+    private String resetPasswordLetterXpath;
+
     @Value("${yandexMessages.resetPassword.link.xpath}")
     private String resetPasswordLinkXpath;
 
@@ -47,7 +51,7 @@ public class YandexMailSteps {
         open(yandexLoginPageUrl);
         Wait<WebDriver> wait = new FluentWait<WebDriver>(getWebDriver())
                 .withTimeout(30, TimeUnit.SECONDS)
-                .pollingEvery(3, TimeUnit.SECONDS)
+                .pollingEvery(5, TimeUnit.SECONDS)
                 .ignoring(NoSuchElementException.class);
         if (!url().equals(yandexLoginPageAccountUrl)) {
             $(By.name(yandexloginName)).setValue(getUser(userName).getMailLogin());
@@ -56,21 +60,20 @@ public class YandexMailSteps {
             goToYandexMailBox();
             wait.until(driver -> {
                 refresh();
-                try {
-                    return driver.findElement(By.xpath(resetPasswordLinkXpath));
-                } catch (NoSuchElementException e) {
-                    return driver.findElement(By.xpath(resetPasswordLinkXpath));
-                }
+                $(By.xpath(resetPasswordLetterXpath)).waitUntil(visible, 3000);
+                return driver.findElement(By.xpath(resetPasswordLetterXpath));
             }).click();
+            $(By.xpath(resetPasswordLinkXpath)).click();
         } else {
             goToYandexMailBox();
             Boolean resetPasswordLinksFound = wait.until(driver -> {
                 refresh();
-                driver.findElements(By.xpath(resetPasswordLinkXpath));
-                return driver.findElements(By.xpath(resetPasswordLinkXpath)).size() == 2;
+                $(By.xpath(resetPasswordLetterXpath)).waitUntil(visible, 3000);
+                return driver.findElements(By.xpath(resetPasswordLetterXpath)).size() == 2;
             });
             Assert.assertTrue(resetPasswordLinksFound);
-            getWebDriver().findElements(By.xpath(resetPasswordLinkXpath)).get(0).click();
+            getWebDriver().findElements(By.xpath(resetPasswordLetterXpath)).get(0).click();
+            $(By.xpath(resetPasswordLinkXpath)).click();
         }
         switchTo().window("Reset Password");
     }

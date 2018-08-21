@@ -7,7 +7,6 @@ import static com.epam.esauto.entity.UserProvider.getUser;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class RegistrationSteps {
 
