@@ -36,3 +36,12 @@ Feature: Evening standard navigation content on Main Page
   Scenario: News Have a News Content 
      When I click on news on Main Page
      Then news should have a news content
+#As a user
+#I want to login from news page
+#So that i can click on news, click on button 'LogIn' fill login form
+  Scenario: I can login with correct credentials from news page
+     When I click on news on Main Page
+     And I click on button 'logIn' near comment in news
+     And I login on news as a user "YANDEX_MAIL_USER"
+     Then I see button 'Logout' near comment in news
+     
