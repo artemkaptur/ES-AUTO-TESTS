@@ -24,3 +24,7 @@ Feature: Evening standard registration positive tests
   Scenario: I can register with twitter
     When  I click twitter icon
     Then  new window with twitter login page should be opened
+
+  Scenario: I can register with g+ account
+    When  I click google icon
+    Then  new window with google login page should be opened

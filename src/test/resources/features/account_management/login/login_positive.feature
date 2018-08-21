@@ -29,3 +29,25 @@ Feature: Evening standard login positive tests
     And   go to the mail box "YANDEX_MAIL_USER" and open reset password link
     And   enter new password "test1234"
     Then  "Your password has been successfully reset." successful password change message should be shown
+
+#As a user
+#I want to be able login with my facebook account
+#So that i can use all available functionality of application
+  Scenario: I can login with facebook
+    When  I click facebook icon
+    Then  new window with facebook login page should be opened
+
+#As a user
+#I want to be able login with my twitter account
+#So that i can use all available functionality of application
+  Scenario: I can login with twitter
+    When  I click twitter icon
+    Then  new window with twitter login page should be opened
+
+#As a user
+#I want to be able login with my google account
+#So that i can use all available functionality of application
+  Scenario: I can login with g+ account
+    When  I click google icon
+    Then  new window with google login page should be opened
+

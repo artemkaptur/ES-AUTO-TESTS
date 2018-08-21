@@ -23,7 +23,7 @@ Feature: Evening standard registration fields validation second form
   Scenario: I can select only two genders
     When  click on select gender field
     Then  drop-down contains only "Male" and "Female" genders
-    
+
   Scenario: I can select only countries at select country drop-down
     When  click on select country field
     Then  drop-down contains only countries
@@ -34,3 +34,7 @@ Feature: Evening standard registration fields validation second form
   Scenario: I can't enter invalid password
     When  fill registration form password field with "11"
     Then  "Password does not meet complexity requirements" warning message should be shown under password field
+
+  Scenario: I can open privacy police page
+    When  I click on privacy police button
+    Then  privacy police page is opened

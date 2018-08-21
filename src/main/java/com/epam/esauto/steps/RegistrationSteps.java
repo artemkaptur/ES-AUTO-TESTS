@@ -121,6 +121,15 @@ public class RegistrationSteps {
     @Value("${mainPage.url}")
     private String mainPageUrl;
 
+    @Value("${registrationPage.googleRegistration.link.xpath}")
+    private String googleRegistrationLinkXpath;
+
+    @Value("${registrationPage.google.continueMessage.id}")
+    private String googleContinueMessageId;
+
+    @Value("${registrationPage.privacyPolice.btn.xpath}")
+    private String privacyPoliceBtnXpath;
+
     @When("^I fill email field with ([^\"]*)$")
     public void iFillEmailFieldWithEmail(String email) {
         clearElementAndSetValue(emailInputId, email);
@@ -197,6 +206,16 @@ public class RegistrationSteps {
     @When("^click on select country field$")
     public void clickOnSelectCountryField() {
         $(By.id(selectCountryId)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
+    }
+
+    @When("^I click google icon$")
+    public void iClickGoogleIcon() {
+        $(By.xpath(googleRegistrationLinkXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
+    }
+
+    @When("^I click on privacy police button$")
+    public void iClickOnPrivacyPoliceButton() {
+        $(By.xpath(privacyPoliceBtnXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
     }
 
     @And("^enter new password \"([^\"]*)\"$")
@@ -281,7 +300,6 @@ public class RegistrationSteps {
     public void dropDownContainsOnlyCountries() {
         List<String> countryVariants = $$(By.xpath(countryVariantsXpath)).texts();
         Assert.assertTrue(countryVariants.stream().allMatch(v -> v.matches("^[a-zA-Z.()\\-’, ]+$")));
-
     }
 
     @Then("^I verify that complete registration page is opened$")
@@ -319,5 +337,18 @@ public class RegistrationSteps {
     public void iFillRegistrationFormWithEmail(String username, String firstname, String lastname) {
         $(By.id(emailInputId)).setValue(getUser(username).getMailLogin());
         fillFirstAndLastNameAndContinueRegistration(firstname, lastname);
+    }
+
+    @Then("^new window with google login page should be opened$")
+    public void newWindowWithGoogleLoginPageShouldBeOpened() {
+        switchTo().window("Вход – Google Аккаунты");
+        $(By.id(googleContinueMessageId)).shouldHave(text("Переход в приложение \"London Evening Standard\""));
+        closeWindowAndSwitchToDefault();
+    }
+
+    @Then("^privacy police page is opened$")
+    public void privacyPolicePageIsOpened() {
+        switchTo().window("Privacy Notice | London Evening Standard");
+        Assert.assertEquals("Privacy Notice | London Evening Standard", title());
     }
 }
