@@ -50,4 +50,3 @@ Feature: Evening standard login positive tests
   Scenario: I can login with g+ account
     When  I click google icon
     Then  new window with google login page should be opened
-
