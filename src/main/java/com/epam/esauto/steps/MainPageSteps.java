@@ -1,10 +1,5 @@
 package com.epam.esauto.steps;
 
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.Selenide.switchTo;
-
 import com.codeborne.selenide.SelenideElement;
 import com.epam.esauto.spring.AppConfig;
 import cucumber.api.java.en.And;
@@ -13,6 +8,9 @@ import cucumber.api.java.en.Then;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
+
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.*;
 
 @ContextConfiguration(classes = AppConfig.class)
 public class MainPageSteps {
