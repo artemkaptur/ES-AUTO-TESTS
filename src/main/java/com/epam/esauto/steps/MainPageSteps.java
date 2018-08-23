@@ -12,6 +12,9 @@ import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.*;
+
 @ContextConfiguration(classes = AppConfig.class)
 public class MainPageSteps {
 
