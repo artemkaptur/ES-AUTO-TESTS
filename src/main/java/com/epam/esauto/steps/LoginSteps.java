@@ -13,6 +13,13 @@ import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
 
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.epam.esauto.entity.UserProvider.getUser;
+
 public class LoginSteps {
     private static final int TRIPLE_DEFAULT_TIMEOUT = 12000;
 

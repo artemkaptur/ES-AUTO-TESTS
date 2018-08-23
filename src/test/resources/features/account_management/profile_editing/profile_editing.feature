@@ -2,158 +2,158 @@ Feature: Evening Standard profile editing positive tests
 
   Background:
     Given I open the main page
-    And I open login form
-    And I submit login form with correct credentials
+    And I check if i logged in as user "GMAIL_MAIL_USER"
     And I open profile page
 
   # As a user
-  # I want to configure Football newsletters
-  # So that i can do it when i click on Football subscription button
-  @pending
+  # I want to configure all newsletters
+  # So that i can do it when i click on all subscription buttons
   Scenario: Configuring newsletters
-    When Newsletters subsection button is visible
-    And I click on the Newsletters subsection button
-    And I click on all subscription buttons
-    Then I see that all subscription buttons have changed color to green
+    When Newsletters subsection button is visible on profile page
+    And I click on the Newsletters subsection button on profile page
+    And I click on all subscription buttons on Newsletters form
+    And I click newsletters submit button
+    And message about successful saving after newsletters configuring is visible
+    Then I see that all subscription buttons on Newsletters form have changed color to green
 
   # As a user
   # I want to see profile editing form
   # So that i can see editing form after clicking on "Edit profile" button
-  @pending
   Scenario: Opening Edit profile form
-    When Edit profile subsection button is visible
-    And I click on Edit profile subsection button
-    Then editing form is visible
+    When Edit profile subsection button is visible on profile page
+    And I click on Edit profile subsection button on profile page
+    Then editing form is visible on profile page
 
   # As a user
   # I want to see the comments i made
   # So that i see them on Comments page
-  @pending
   Scenario: Opening Comments page
-    When Comments subsection button is visible
-    And I click on the Comments subsection button
-    Then comments form is visible
+    When Comments subsection button is visible on profile page
+    And I click on the Comments subsection button on profile page
+    Then comments form is visible on profile page
 
   # As a user
   # I want change my password
   # So that i can see password changing form
-  @pending
   Scenario: Opening Password changing form
-    When Change password subsection button is visible
-    And I click on the Change password subsection button
-    Then password changing form is visible
+    When Change password subsection button is visible on profile page
+    And I click on the Change password subsection button on profile page
+    Then password changing form is visible on profile page
 
   # As a user
   # I want to see how required fields are marked
   # So that see an asterisk mark near first name field
-  @pending
   Scenario: Locating asterisk mark
-    When I click on Edit profile subsection button
-    Then I locate an asterisk mark near first name field
+    When I click on Edit profile subsection button on profile page
+    Then I locate an asterisk mark near first name field input on edit form
 
   # As a user
-  # I want to delete my first name on profile page
-  # So that i clear First name input and save the changes
-  @pending
+  # I want to see warning message if my first name input is empty
+  # So that i clear first name input and save the changes
   Scenario: Deleting profile first name
-    When I click on Edit profile subsection button
-    And I clear first name field
-    And I click on Submit button
-    Then message about successful saving after profile editing is not visible
+    When I click on Edit profile subsection button on profile page
+    And I clear first name field input on edit form
+    And I click on Submit button on edit form
+    Then warning message about not valid first name is visible on edit form
 
   # As a user
-  # I want to delete my last name on profile page
-  # So that i clear Last name input and save the changes
-  @pending
+  # I want to see warning message if my last name input is empty
+  # So that i clear last name input and save the changes
   Scenario: Deleting profile last name
-    When I click on Edit profile subsection button
-    And I clear last name field
-    And I click on Submit button
-    Then message about successful saving after profile editing is not visible
+    When I click on Edit profile subsection button on profile page
+    And I clear last name field input on edit form
+    And I click on Submit button on edit form
+    Then warning message about not valid last name is visible on edit form
 
   # As a user
-  # I want to remove my gender on profile page
+  # I want see warning message if my gender option hasn't been chosen
   # So that i select empty option in Select menu and save the changes
-  @pending
   Scenario: Deleting profile gender
-    When I click on Edit profile subsection button
-    And I select empty option on gender dropdown
-    And I click on Submit button
-    Then message about successful saving after profile editing is not visible
+    When I click on Edit profile subsection button on profile page
+    And I select empty option on gender dropdown on edit form
+    And I click on Submit button on edit form
+    Then warning message about empty gender option is visible on edit form
 
   # As a user
   # I want to change my first name on profile page
-  # So that i select empty option in Select menu and save the changes
-  @pending
+  # So that i enter new correct name and save the changes
   Scenario: Editing profile first name
-    When I click on Edit profile subsection button
-    And I clear first name field
-    And I enter a valid name into first name field
-    And I click on Submit button
-    Then message about successful saving after profile editing is visible
+    When I click on Edit profile subsection button on profile page
+    And I clear first name field input on edit form
+    And I enter a valid name into first name field input on edit form
+    And I click on Submit button on edit form
+    And message about successful saving after profile editing is visible on edit form
+    Then I see that i have changed first name successfully
 
   # As a user
   # I want to change country on profile page
-  # So that i select China in Select menu and save the changes
-  @pending
+  # So that i select other country in Select menu and save the changes
   Scenario: Editing profile country
-    When I click on Edit profile subsection button
-    And I select China as country
-    And I click on Submit button
-    Then message about successful saving after profile editing is visible
+    When I click on Edit profile subsection button on profile page
+    And I select new country from country Select dropdown on edit form
+    And I click on Submit button on edit form
+    And message about successful saving after profile editing is visible on edit form
+    Then I see that i have changed country successfully
 
   # As a user
-  # I want to check if i can use figures in my first name
+  # I want to see warning message if i use figures in my first name
   # So that i clear first name field and enter figures
-  @Pending
-  Scenario: Enter not valid first name
-    When I click on Edit profile subsection button
-    And I clear first name field
-    And I enter a not valid name into first name field
-    And I click on Submit button
-    Then message about successful saving after profile editing is not visible
-    And warning message about not valid first name is visible
+  Scenario: Entering not valid first name
+    When I click on Edit profile subsection button on profile page
+    And I clear first name field input on edit form
+    And I enter a not valid first name into first name field input on edit form
+    And I click on Submit button on edit form
+    Then warning message about not valid first name is visible on edit form
 
   # As a user
-  # I want to check if i can use strange symbols in my last name
+  # I want to see warning message if i use strange symbols in my last name
   # So that i clear last name field and enter these symbols
-  @pending
-  Scenario: Enter not valid last name
-    When I click on Edit profile subsection button
-    And I clear last name field
-    And I enter a not valid name into last name field
-    And I click on Submit button
-    Then message about successful saving after profile editing is not visible
-    And warning message about not valid first name is visible
+  Scenario: Entering not valid last name
+    When I click on Edit profile subsection button on profile page
+    And I clear last name field input on edit form
+    And I enter a not valid name into last name field input on edit form
+    And I click on Submit button on edit form
+    Then warning message about not valid last name is visible on edit form
 
   # As a user
-  # I don't want to use my old password when i am changing it
-  # So that i can't see successful changing password message after submitting form with old password
-  @pending
-  Scenario: Changing password
-    When I click on the Change password subsection button
-    And I submit password changing form with old password
-    Then message about successful saving after password changing is not visible
+  # I want to see warning message if i repeat new password with mistakes
+  # So that i see warning message after submitting password changing form
+  Scenario: Changing password with mistakes
+    When I click on the Change password subsection button on profile page
+    And I change "GMAIL_MAIL_USER" password to "GMAIL_MAIL_USER_NEW_PASSWORD" password with mistakes
+    Then warning message about not valid password repeating is visible
 
   # As a user
   # I want to see successful password changing message after changing it
   # So that I see this message after submitting password changing form
-  @pending
-  Scenario: Changing password message appears
-    When I click on the Change password subsection button
-    And I submit password changing form with new password
-    Then message about successful saving after password changing is visible
+  Scenario: Changing password without mistakes
+    When I click on the Change password subsection button on profile page
+    And I change "GMAIL_MAIL_USER" password to "GMAIL_MAIL_USER_NEW_PASSWORD" password
+    And message about successful password changing is visible on password changing form
+    And click logout button
+    And logout button doesn't exist
+    And I open login form
+    And I login as a user "GMAIL_MAIL_USER_NEW_PASSWORD"
+    Then logout button exists
 
   # As a user
   # I want to change my email and can't login with old email
   # So that I see warning message after login with old email
-  @pending
   Scenario: Can't login with old email after changing it
-    When I click on Edit profile subsection button
-    And I clear email field
-    And I enter valid email into email field
-    And I click on submit button
-    And I logout
+    When I click on Edit profile subsection button on profile page
+    And I submit edit form with "GMAIL_MAIL_USER_NEW_EMAIL" email
+    And message about successful saving after profile editing is visible on edit form
+    And click logout button
+    And logout button doesn't exist
     And I open login form
-    And I fill login form with old credentials
-    Then I see warning login message
+    And I login as a user "GMAIL_MAIL_USER"
+    Then "Invalid login or password." warning message should be shown
+
+  # As a user
+  # I want to see what comments i have left
+  # So that i leave a comment in custom news comments section then i open profile page, go to Comments section and find it
+  Scenario: Seeing the comment user has left
+    When I leave a comment in custom news comments form
+    And I open profile page
+    And I click on the Comments subsection button on profile page
+    Then I verify my comment exists in the Comments subsection button on profile page
