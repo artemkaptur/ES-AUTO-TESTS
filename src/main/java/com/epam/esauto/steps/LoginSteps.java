@@ -6,6 +6,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.epam.esauto.entity.UserProvider.getUser;
+import static com.epam.esauto.util.DataHolder.getRegistrationPositiveTestUser;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
@@ -64,6 +65,13 @@ public class LoginSteps {
     @When("^I click forgotten password$")
     public void iClickForgottenPassword() {
         $(By.xpath(forgottenPasswordBtnXpath)).click();
+    }
+
+    @And("^I login as a user registrationPositiveTestUser$")
+    public void iLoginAsAUserRegistrationPositiveTestUser() {
+        $(By.xpath(emailInputXpath)).setValue(getRegistrationPositiveTestUser().getEsLogin());
+        $(By.name(passwInputName)).setValue(getRegistrationPositiveTestUser().getEsPassword());
+        $(By.className(loginSubmitBtnClass)).click();
     }
 
     @And("^enter email of user \"([^\"]*)\"$")

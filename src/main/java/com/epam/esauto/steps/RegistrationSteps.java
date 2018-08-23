@@ -4,6 +4,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.epam.esauto.entity.UserProvider.getUser;
+import static com.epam.esauto.util.DataHolder.getRegistrationPositiveTestUser;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import cucumber.api.DataTable;
@@ -161,9 +162,10 @@ public class RegistrationSteps {
 
     @When("^I fill registration form with random email, \"([^\"]*)\", \"([^\"]*)\"$")
     public void iFillRegistrationFormWithRandomEmail(String firstname, String lastname) {
-        $(By.id(emailInputId)).setValue(randomAlphabetic(8) + "@"
+        getRegistrationPositiveTestUser().setEsLogin(randomAlphabetic(8) + "@"
                 + randomAlphabetic(4) + "."
                 + randomAlphabetic(3));
+        $(By.id(emailInputId)).setValue(getRegistrationPositiveTestUser().getEsLogin());
         fillFirstAndLastNameAndContinueRegistration(firstname, lastname);
     }
 
@@ -171,6 +173,11 @@ public class RegistrationSteps {
         $(By.id(firstnameInputId)).setValue(firstname);
         $(By.id(lastnameInputId)).setValue(lastname);
         $(By.xpath(continueRegistrationBtnXpath)).click();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @When("^I click facebook icon$")
@@ -238,6 +245,7 @@ public class RegistrationSteps {
         $(By.id(selectYearOfBirthId)).selectOption(mandatoryFieldsData.get("birthyear"));
         $(By.id(selectGenderId)).selectOption(mandatoryFieldsData.get("gender"));
         $(By.id(nicknameInputId)).setValue(randomAlphabetic(14));
+        getRegistrationPositiveTestUser().setEsPassword(mandatoryFieldsData.get("password"));
         $(By.id(registrationFormPasswordId)).setValue(mandatoryFieldsData.get("password"));
         $(By.id(registrationFormPasswordConfirmationId)).setValue(mandatoryFieldsData.get("password"));
     }

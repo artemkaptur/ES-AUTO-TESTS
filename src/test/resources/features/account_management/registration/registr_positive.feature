@@ -15,7 +15,9 @@ Feature: Evening standard registration positive tests
       | gender    | Male     |
       | password  | test7890 |
     Then  successful registration message should be shown
-    And   click logout button
+    And  I open login form
+    And  I login as a user registrationPositiveTestUser
+    Then  click logout button
 
   Scenario: I can register with facebook
     When  I click facebook icon
