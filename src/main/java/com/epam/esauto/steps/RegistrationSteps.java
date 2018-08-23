@@ -130,6 +130,12 @@ public class RegistrationSteps {
     @Value("${registrationPage.privacyPolice.btn.xpath}")
     private String privacyPoliceBtnXpath;
 
+    @Value("${registrationPage.completeRegistration.title.className}")
+    private String completeRegistrationTitleClassName;
+
+    @Value("${registrationPage.invalidZipCodeMessage.xpath}")
+    private String invalidZipCodeMessageXpath;
+
     @When("^I fill email field with ([^\"]*)$")
     public void iFillEmailFieldWithEmail(String email) {
         clearElementAndSetValue(emailInputId, email);
@@ -234,6 +240,11 @@ public class RegistrationSteps {
         $(By.id(nicknameInputId)).setValue(randomAlphabetic(14));
         $(By.id(registrationFormPasswordId)).setValue(mandatoryFieldsData.get("password"));
         $(By.id(registrationFormPasswordConfirmationId)).setValue(mandatoryFieldsData.get("password"));
+    }
+
+    @And("^fill zip code field with ([^\"]*)$")
+    public void fillZipCodeFieldWithZipCode(String zipCode) {
+        $(By.id(zipCodeId)).setValue(zipCode);
     }
 
     @Then("^\"([^\"]*)\", \"([^\"]*)\" or \"([^\"]*)\" warning message should be shown$")
@@ -350,5 +361,11 @@ public class RegistrationSteps {
     public void privacyPolicePageIsOpened() {
         switchTo().window("Privacy Notice | London Evening Standard");
         Assert.assertEquals("Privacy Notice | London Evening Standard", title());
+    }
+
+    @Then("^\"([^\"]*)\" message should be shown under zip code field$")
+    public void messageShouldBeShownUnderZipCodeField(String warningMessage) {
+        $(By.className(completeRegistrationTitleClassName)).click();
+        $(By.xpath(invalidZipCodeMessageXpath)).shouldHave(text(warningMessage));
     }
 }
