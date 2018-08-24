@@ -70,8 +70,11 @@ public class HomesAndPropertyPageSteps {
 	@Value("${home&PropertyPage.maxPriceToRent.xpath}")
 	private String maxPriceToRent;
 
-	@Value("${home&PropertyPage.slideBar.xpath}")
-	private String slideBar;
+	@Value("${home&PropertyPage.slideBarMinPrice.xpath}")
+	private String slideBarMinPrice;
+	
+	@Value("${home&PropertyPage.slideBarBeginningRange.xpath}")
+	private String slideBarBeginningRange;
 
 	@Given("^I open the Homes&PropertyPage$")
 	public void openHomeAndPropertyPage() {
@@ -118,14 +121,13 @@ public class HomesAndPropertyPageSteps {
 		$(By.xpath(dropdownBeds)).shouldHave(Condition.exactText(items.replace(COMMA, "")));
 	}
 
-	// have some problems with input correct location
 	@When("^I enter \"([^\"]*)\" and choose \"([^\"]*)\", \"([^\"]*)\" in 'Homes&Property' section$")
-	public void iEnterLocationAndChooseParameters(String location, String type, String number_of_beds) {
+	public void iEnterLocationAndChooseParameters(String location, String type, String numberOfBeds) {
 		$(By.xpath(inputLocation)).setValue(location);
 		WebElement firstElementLikeLocation = $(By.xpath(inputLocationDropDown)).shouldHave(Condition.text(location));
 		actions().moveToElement(firstElementLikeLocation).click();
 		$$(By.xpath(dropdownTypeAllItems)).find(Condition.exactText(type)).click();
-		$$(By.xpath(dropdownBedsAllItems)).find(Condition.exactText(number_of_beds)).click();
+		$$(By.xpath(dropdownBedsAllItems)).find(Condition.exactText(numberOfBeds)).click();
 	}
 
 	@And("^I click 'search properties' button in 'Homes&Property' section$")
@@ -155,14 +157,21 @@ public class HomesAndPropertyPageSteps {
 		$(By.xpath(maxPriceToRent)).shouldHave(Condition.text(maxPrice));
 	}
 
-	@When("^I click on slide bar of price$")
-	public void iClickOnSlideBarOfPrice() {
-		$(By.xpath(slideBar)).click();
+	@When("^I drag slide bar of min price and drop at the beginning of the price range$")
+	public void iDragSlideBarOfMinPriceAndDropAtTheBeginningOfThePriceRange() {
+		actions().dragAndDrop($(By.xpath(slideBarMinPrice)), $(By.xpath(slideBarBeginningRange))).build().perform();
 	}
 	
-	@Then("^I see another minimum price than \"([^\"]*)\", and the slide bar moves to the center of the price scale$")
-	public void iSeeAnotherMinPriceThan(String minPrice) {
-		$(By.xpath(minPriceForSale)).shouldNotBe(Condition.text(minPrice));
+	@Then("^I see different min price than was \"([^\\\"]*)\"$")
+	public void iSeeDifferentMinPriceThanWasBeen(String minPrice) {
+		$(By.xpath(minPriceForSale)).shouldNotHave(Condition.value(minPrice));
+	}
+	
+	@Then("^I see that the search range starts at \"([^\\\"]*)\"$")
+	public void inTheResultsISeeCorrectEditedminPrice(String startingPrice) {
+		$(By.xpath(searchInformation)).shouldHave(Condition.text(startingPrice));
+		getWebDriver().close();
+		switchTo().window(0);
 	}
 
 }
