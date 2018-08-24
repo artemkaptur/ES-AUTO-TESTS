@@ -9,7 +9,7 @@ Feature: Evening standard login negative tests
 #I want to receive warning message
 #So that i can easily rewrite login or password
   Scenario Outline: I can't login with wrong credentials
-    When  I submit login form as a user <user>
+    When  I submit login form as a user "<user>"
     Then  "Invalid login or password." warning message should be shown
 
     Examples:

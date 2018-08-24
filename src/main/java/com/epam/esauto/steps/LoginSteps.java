@@ -1,6 +1,12 @@
 package com.epam.esauto.steps;
 
-import com.epam.esauto.entity.User;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.epam.esauto.entity.UserProvider.getUser;
+
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -15,7 +21,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.epam.esauto.entity.UserProvider.getUser;
 
 public class LoginSteps {
-    private static final int LOGIN_FORM_SUBMIT_TIMEOUT = 12000;
+    private static final int TRIPLE_DEFAULT_TIMEOUT = 12000;
 
     @Value("${loginPage.email.input.xpath}")
     private String emailInputXpath;
@@ -44,19 +50,16 @@ public class LoginSteps {
     @When("^I login as a user \"([^\"]*)\"$")
     public void iLoginAsAUser(String userName) {
         iSubmitLoginFormAsAUser(userName);
-        $(By.xpath(loginWelcomingMsgXpath)).waitUntil(visible, LOGIN_FORM_SUBMIT_TIMEOUT);
-        $(By.xpath(loginWelcomingMsgXpath))
-                .shouldBe(visible)
+        $(By.xpath(loginWelcomingMsgXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
                 .shouldHave(text("You are currently logged in, click here to log out"));
         getWebDriver().close();
         switchTo().window(0);
     }
 
-    @When("^I submit login form as a user ([^\"]*)$")
+    @When("^I submit login form as a user \"([^\"]*)\"$")
     public void iSubmitLoginFormAsAUser(String userName) {
-        User user = getUser(userName);
-        $(By.xpath(emailInputXpath)).setValue(user.getEsLogin());
-        $(By.name(passwInputName)).setValue(user.getEsPassword());
+        $(By.xpath(emailInputXpath)).setValue(getUser(userName).getEsLogin());
+        $(By.name(passwInputName)).setValue(getUser(userName).getEsPassword());
         $(By.className(loginSubmitBtnClass)).click();
     }
 
@@ -70,10 +73,9 @@ public class LoginSteps {
         $(By.xpath(forgottenPasswordBtnXpath)).click();
     }
 
-    @And("^enter email of \"([^\"]*)\"$")
-    public void enterEmailOf(String userName) {
-        User user = getUser(userName);
-        $(By.xpath(forgottenPasswordEmailInputXpath)).setValue(user.getMailLogin()).pressEnter();
+    @And("^enter email of user \"([^\"]*)\"$")
+    public void enterEmailOfUser(String userName) {
+        $(By.xpath(forgottenPasswordEmailInputXpath)).setValue(getUser(userName).getMailLogin()).pressEnter();
     }
 
     @Then("^\"([^\"]*)\" message should be shown$")
@@ -83,6 +85,6 @@ public class LoginSteps {
 
     @Then("^\"([^\"]*)\" warning message should be shown$")
     public void warningMessageShouldBeShown(String warningMessage) {
-        $(By.id(invalidLoginOrPasswordWarningMessageId)).shouldHave(text(warningMessage));
+        $(By.id(invalidLoginOrPasswordWarningMessageId)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).shouldHave(text(warningMessage));
     }
 }

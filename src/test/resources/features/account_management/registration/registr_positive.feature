@@ -7,21 +7,20 @@ Feature: Evening standard registration positive tests
     Given I open the main page
     Given I click register button
 
-  @pending
-  Scenario: user can register
-    When  I fill registration form with "test@gmail.com", "John", "Smith"
+  Scenario: I can register
+    When  I fill registration form with random email, "John", "Smith"
     And   fill registration form mandatory fields with:
-      | country | birthyear | gender | nickname | password |
-      | Belarus | 1999      | male   | Johnny   | test7890 |
+      | country   | Belarus  |
+      | birthyear | 1999     |
+      | gender    | Male     |
+      | password  | test7890 |
     Then  successful registration message should be shown
-    And   go to the mail box and check a registration successful message
+    And   click logout button
 
-  @pending
   Scenario: I can register with facebook
     When  I click facebook icon
     Then  new window with facebook login page should be opened
-
-  @pending
+    
   Scenario: I can register with twitter
     When  I click twitter icon
     Then  new window with twitter login page should be opened

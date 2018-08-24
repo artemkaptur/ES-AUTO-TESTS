@@ -1,5 +1,8 @@
 package com.epam.esauto.steps;
 
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.*;
+
 import com.codeborne.selenide.SelenideElement;
 import com.epam.esauto.spring.AppConfig;
 import cucumber.api.java.en.And;
@@ -45,24 +48,25 @@ public class MainPageSteps {
 
     @And("^click logout button$")
     public void clickLogoutButton() {
-        clickOnUserBtnAndGetLogoutBtn().click();
+        refresh();
+        clickOnUserBtnAndGetBtnByXpath(logoutBtnXpath).click();
     }
 
     @Then("^logout button doesn't exist$")
     public void logoutButtonDoesntExist() {
-        clickOnUserBtnAndGetLogoutBtn().shouldNotBe(visible);
+        clickOnUserBtnAndGetBtnByXpath(logoutBtnXpath).shouldNotBe(visible);
+        $(By.xpath(userBtnXpath)).click();
     }
 
     @Then("^login button is displayed$")
     public void loginButtonIsDisplayed() {
-        $(By.xpath(userBtnXpath)).click();
-        $(By.xpath(loginBtnXpath)).shouldBe(visible);
+        clickOnUserBtnAndGetBtnByXpath(loginBtnXpath).shouldBe(visible);
     }
 
     @Then("^I open login form$")
     public void iOpenLoginForm() {
-        $(By.xpath(loginBtnXpath)).click();
-        switchTo().window(1);
+        clickOnUserBtnAndGetBtnByXpath(loginBtnXpath).click();
+        switchTo().window("Log in");
     }
 
     @Given("^I click register button$")
@@ -71,13 +75,8 @@ public class MainPageSteps {
         $(By.xpath(registrationBtnXpath)).click();
     }
 
-    @Then("^logout button exists$")
-    public void logoutButtonExists() {
-        clickOnUserBtnAndGetLogoutBtn().shouldBe(visible);
-    }
-
-    public SelenideElement clickOnUserBtnAndGetLogoutBtn() {
+    public SelenideElement clickOnUserBtnAndGetBtnByXpath(String xpath) {
         $(By.xpath(userBtnXpath)).click();
-        return $(By.xpath(logoutBtnXpath));
+        return $(By.xpath(xpath));
     }
 }
