@@ -2,18 +2,26 @@ package com.epam.esauto.steps.content;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 import org.openqa.selenium.By;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.codeborne.selenide.Condition;
+import com.epam.esauto.steps.LoginSteps;
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class MainPageSteps {
 
 	private static final String ATTRIBUTE_CONTENT = "content";
+
+	@Autowired
+	private LoginSteps loginSteps;
 
 	@Value("${sectionLinks.xpath}")
 	private String sectionLinks;
@@ -35,6 +43,15 @@ public class MainPageSteps {
 
 	@Value("${newsWithContent.xpath}")
 	private String newsWithContent;
+
+	@Value("${newsButtonLogIn.xpath}")
+	private String newsButtonLogIn;
+
+	@Value("${newsButtonLogout.xpath}")
+	private String newsButtonLogout;
+
+	@Value("${articlePage.commentSection.xpath}")
+	private String articleCommentsSectionXpath;
 
 	private String urlOfChoosenNews;
 
@@ -73,4 +90,23 @@ public class MainPageSteps {
 	public void newsHaveANewsContent() {
 		$(By.xpath(newsWithContent)).shouldBe(Condition.exist);
 	}
+
+	@And("^I click on button 'logIn' near comment in news$")
+	public void iClickOnButtonLogInNearCommentInNews() {
+		$(By.xpath(newsButtonLogIn)).click();
+		switchTo().window(1);
+	}
+
+	@And("^I login on news as a user \"([^\"]*)\"$")
+	public void iLoginOnNewAsAUser(String user) {
+		loginSteps.iSubmitLoginFormAsAUser(user);
+		getWebDriver().close();
+		switchTo().window(0);
+	}
+
+	@Then("^I see button 'Logout' near comment in news$")
+	public void iSeeButtonLogoutNearCommentInNews() {
+		$(By.xpath(newsButtonLogout)).shouldBe(Condition.exist);
+	}
+
 }
