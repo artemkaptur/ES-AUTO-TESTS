@@ -4,6 +4,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.epam.esauto.entity.UserProvider.getUser;
+import static com.epam.esauto.util.DataHolder.getRegistrationPositiveTestUser;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import cucumber.api.DataTable;
@@ -121,6 +122,21 @@ public class RegistrationSteps {
     @Value("${mainPage.url}")
     private String mainPageUrl;
 
+    @Value("${registrationPage.googleRegistration.link.xpath}")
+    private String googleRegistrationLinkXpath;
+
+    @Value("${registrationPage.google.continueMessage.id}")
+    private String googleContinueMessageId;
+
+    @Value("${registrationPage.privacyPolice.btn.xpath}")
+    private String privacyPoliceBtnXpath;
+
+    @Value("${registrationPage.completeRegistration.title.className}")
+    private String completeRegistrationTitleClassName;
+
+    @Value("${registrationPage.invalidZipCodeMessage.xpath}")
+    private String invalidZipCodeMessageXpath;
+
     @When("^I fill email field with ([^\"]*)$")
     public void iFillEmailFieldWithEmail(String email) {
         clearElementAndSetValue(emailInputId, email);
@@ -146,9 +162,10 @@ public class RegistrationSteps {
 
     @When("^I fill registration form with random email, \"([^\"]*)\", \"([^\"]*)\"$")
     public void iFillRegistrationFormWithRandomEmail(String firstname, String lastname) {
-        $(By.id(emailInputId)).setValue(randomAlphabetic(8) + "@"
+        getRegistrationPositiveTestUser().setEsLogin(randomAlphabetic(8) + "@"
                 + randomAlphabetic(4) + "."
                 + randomAlphabetic(3));
+        $(By.id(emailInputId)).setValue(getRegistrationPositiveTestUser().getEsLogin());
         fillFirstAndLastNameAndContinueRegistration(firstname, lastname);
     }
 
@@ -156,6 +173,11 @@ public class RegistrationSteps {
         $(By.id(firstnameInputId)).setValue(firstname);
         $(By.id(lastnameInputId)).setValue(lastname);
         $(By.xpath(continueRegistrationBtnXpath)).click();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @When("^I click facebook icon$")
@@ -199,6 +221,16 @@ public class RegistrationSteps {
         $(By.id(selectCountryId)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
     }
 
+    @When("^I click google icon$")
+    public void iClickGoogleIcon() {
+        $(By.xpath(googleRegistrationLinkXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
+    }
+
+    @When("^I click on privacy police button$")
+    public void iClickOnPrivacyPoliceButton() {
+        $(By.xpath(privacyPoliceBtnXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
+    }
+
     @And("^enter new password \"([^\"]*)\"$")
     public void enterNewPassword(String password) {
         $(By.xpath(newPasswordXpath)).setValue(password);
@@ -213,8 +245,14 @@ public class RegistrationSteps {
         $(By.id(selectYearOfBirthId)).selectOption(mandatoryFieldsData.get("birthyear"));
         $(By.id(selectGenderId)).selectOption(mandatoryFieldsData.get("gender"));
         $(By.id(nicknameInputId)).setValue(randomAlphabetic(14));
+        getRegistrationPositiveTestUser().setEsPassword(mandatoryFieldsData.get("password"));
         $(By.id(registrationFormPasswordId)).setValue(mandatoryFieldsData.get("password"));
         $(By.id(registrationFormPasswordConfirmationId)).setValue(mandatoryFieldsData.get("password"));
+    }
+
+    @And("^fill zip code field with ([^\"]*)$")
+    public void fillZipCodeFieldWithZipCode(String zipCode) {
+        $(By.id(zipCodeId)).setValue(zipCode);
     }
 
     @Then("^\"([^\"]*)\", \"([^\"]*)\" or \"([^\"]*)\" warning message should be shown$")
@@ -281,7 +319,6 @@ public class RegistrationSteps {
     public void dropDownContainsOnlyCountries() {
         List<String> countryVariants = $$(By.xpath(countryVariantsXpath)).texts();
         Assert.assertTrue(countryVariants.stream().allMatch(v -> v.matches("^[a-zA-Z.()\\-’, ]+$")));
-
     }
 
     @Then("^I verify that complete registration page is opened$")
@@ -319,5 +356,24 @@ public class RegistrationSteps {
     public void iFillRegistrationFormWithEmail(String username, String firstname, String lastname) {
         $(By.id(emailInputId)).setValue(getUser(username).getMailLogin());
         fillFirstAndLastNameAndContinueRegistration(firstname, lastname);
+    }
+
+    @Then("^new window with google login page should be opened$")
+    public void newWindowWithGoogleLoginPageShouldBeOpened() {
+        switchTo().window("Вход – Google Аккаунты");
+        $(By.id(googleContinueMessageId)).shouldHave(text("Переход в приложение \"London Evening Standard\""));
+        closeWindowAndSwitchToDefault();
+    }
+
+    @Then("^privacy police page is opened$")
+    public void privacyPolicePageIsOpened() {
+        switchTo().window("Privacy Notice | London Evening Standard");
+        Assert.assertEquals("Privacy Notice | London Evening Standard", title());
+    }
+
+    @Then("^\"([^\"]*)\" message should be shown under zip code field$")
+    public void messageShouldBeShownUnderZipCodeField(String warningMessage) {
+        $(By.className(completeRegistrationTitleClassName)).click();
+        $(By.xpath(invalidZipCodeMessageXpath)).shouldHave(text(warningMessage));
     }
 }
