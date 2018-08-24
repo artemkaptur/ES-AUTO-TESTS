@@ -4,12 +4,16 @@ import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@ComponentScan(basePackages = "com.epam.esauto")
-@PropertySource(value = {"classpath:editprofile.properties", "classpath:content.properties",
-        "classpath:homeprop.properties", "classpath:login.properties",
-        "classpath:registration.properties", "classpath:headerFooter.properties",
-        "classpath:yandex.properties", "classpath:grid.properties", "classpath:mobile.properties",
-        "classpath:searchProperties.properties","classpath:goLondon.properties", "classpath:bookATicket.properties","classpath:articleGoLondon.properties"}, encoding = "UTF-8")
+@ComponentScan(basePackages =  "com.epam.esauto")
+@PropertySources({
+        @PropertySource("classpath:mainpage.properties"),
+        @PropertySource("classpath:editprofile.properties"),
+        @PropertySource("classpath:content.properties"),
+        @PropertySource("classpath:homeprop.properties"),
+        @PropertySource("classpath:login.properties"),
+        @PropertySource("classpath:registration.properties"),
+        @PropertySource("classpath:headerFooter.properties"),
+        @PropertySource("classpath:yandex.properties")})
 public class AppConfig {
     @Bean
     public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
