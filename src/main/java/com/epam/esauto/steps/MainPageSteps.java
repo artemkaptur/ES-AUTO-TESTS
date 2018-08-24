@@ -1,8 +1,5 @@
 package com.epam.esauto.steps;
 
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
-
 import com.codeborne.selenide.SelenideElement;
 import com.epam.esauto.spring.AppConfig;
 import cucumber.api.java.en.And;
@@ -78,5 +75,10 @@ public class MainPageSteps {
     public SelenideElement clickOnUserBtnAndGetBtnByXpath(String xpath) {
         $(By.xpath(userBtnXpath)).click();
         return $(By.xpath(xpath));
+    }
+
+    public void clickLoginButton() {
+        $(By.xpath(loginBtnXpath)).click();
+        switchTo().window("Log in");
     }
 }

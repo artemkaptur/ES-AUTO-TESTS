@@ -1,7 +1,6 @@
-package com.epam.esauto.steps;
+package com.epam.esauto.steps.header_footer;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 public class StepUtils {
 

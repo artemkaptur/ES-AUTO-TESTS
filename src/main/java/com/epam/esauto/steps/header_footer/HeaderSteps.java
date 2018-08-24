@@ -1,4 +1,4 @@
-package com.epam.esauto.steps;
+package com.epam.esauto.steps.header_footer;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
-import static com.epam.esauto.steps.StepUtils.*;
+import static com.epam.esauto.steps.header_footer.StepUtils.*;
 import static org.junit.Assert.assertEquals;
 
 public class HeaderSteps {
@@ -76,86 +76,86 @@ public class HeaderSteps {
     private String menuItemXpath;
 
     @When("^I click main logo$")
-    public void clickMainLogo() throws Throwable {
+    public void clickMainLogo() {
         $(By.xpath(mainLogoXpath)).click();
     }
 
     @When("^I click homes&property logo$")
-    public void iClickHomesPropertyLogo() throws Throwable {
+    public void iClickHomesPropertyLogo() {
         $(By.xpath(hpLogoXpath)).click();
     }
 
     @When("^I search \"([^\"]*)\"$")
-    public void iSearch(String word) throws Throwable {
+    public void iSearch(String word) {
         $(By.xpath(searchButtonXpath)).click();
-        $(By.xpath(searchFieldXpath)).sendKeys(word);
+        $(By.xpath(searchFieldXpath)).setValue(word);
         $(By.xpath(searchXpath)).click();
     }
 
     @When("^I click on Toggle Menu Button$")
-    public void iClickOnToggleMenuButton() throws Throwable {
+    public void iClickOnToggleMenuButton() {
         $(By.xpath(toggleMenuButtonXpath)).click();
     }
 
     @Then("^profile toggle menu should be visible$")
-    public void profileToggleMenuShouldBeVisible() throws Throwable {
+    public void profileToggleMenuShouldBeVisible() {
         $(By.xpath(profileToggleMenuXpath)).shouldBe(visible);
     }
 
     @And("^under search results should be visible Google logo$")
-    public void underSearchResultsShouldBeVisibleGoogleLogo() throws Throwable {
+    public void underSearchResultsShouldBeVisibleGoogleLogo() {
         $(By.xpath(searchResultsGoogleLogoXpath)).shouldBe(visible);
     }
 
     @Then("^I see search results related to word \"([^\"]*)\"$")
-    public void iSeeResultsRelatedTo(String word) throws Throwable {
+    public void iSeeResultsRelatedTo(String word) {
         $$(By.xpath(searchResultsContainerXpath)).shouldBe(CollectionCondition.sizeGreaterThan(0))
                 .findBy(Condition.attribute("b", word));
     }
 
     @And("^Google logo in search results should have valid href$")
-    public void googleLogoInSearchResultsShouldHaveValidHref() throws Throwable {
+    public void googleLogoInSearchResultsShouldHaveValidHref() {
         $(By.xpath(searchResultsGoogleLogoXpath))
                 .shouldHave(attribute(ATTRIBUTE_HREF, googleLogoHref));
     }
 
     @Then("^full menu should be visible$")
-    public void fullMenuShouldBeVisible() throws Throwable {
+    public void fullMenuShouldBeVisible() {
         $(By.xpath(fullMenuXpath)).shouldBe(visible);
     }
 
     @When("^I click on Toggle Search Button$")
-    public void iClickOnToggleSearchButton() throws Throwable {
+    public void iClickOnToggleSearchButton() {
         $(By.xpath(searchButtonXpath)).click();
     }
 
     @Then("^search field should be visible$")
-    public void searchFieldShouldBeVisible() throws Throwable {
+    public void searchFieldShouldBeVisible() {
         $(By.xpath(searchFieldXpath)).shouldBe(visible);
     }
 
     @When("^I click on Profile Button$")
-    public void iClickOnProfileButton() throws Throwable {
+    public void iClickOnProfileButton() {
         $(By.xpath(profileButtonXpath)).click();
     }
 
     @Given("^I open url \"([^\"]*)\"$")
-    public void iOpenUrl(String url) throws Throwable {
+    public void iOpenUrl(String url) {
         open(getFullUrl(mainPageUrl, url));
     }
 
     @When("^I click main logo at GOLondon section$")
-    public void iClickMainLogoAtGOLondonSection() throws Throwable {
+    public void iClickMainLogoAtGOLondonSection() {
         $(By.xpath(mainLogoGoLondonXpath)).click();
     }
 
     @When("^I click main logo at H&P section$")
-    public void iClickMainLogoAtHPSection() throws Throwable {
+    public void iClickMainLogoAtHPSection() {
         $(By.xpath(mainLogoHPXpath)).click();
     }
 
     @Then("^main menu item number \"([^\"]*)\" \"([^\"]*)\" contains list of sub-menus and they have valid href$")
-    public void mainMenuItemNumberContainsListOfSubMenusAndTheyHaveValidHref(String menuNumber, String menuItem, Map<String, String> subMenus) throws Throwable {
+    public void mainMenuItemNumberContainsListOfSubMenusAndTheyHaveValidHref(String menuNumber, String menuItem, Map<String, String> subMenus) {
         Map<String, String> subMenuInfo = $(By.xpath(String.format(
                 "//nav[@class='main-menu']//a[@title='%s']", menuItem)))
                 .hover()
@@ -167,7 +167,7 @@ public class HeaderSteps {
     }
 
     @Then("^ESMagazine section should have valid href \"([^\"]*)\"$")
-    public void esmagazineSectionShouldHaveValidHref(String href) throws Throwable {
+    public void esmagazineSectionShouldHaveValidHref(String href) {
         $(By.xpath(esMagazineSectionXpath))
                 .shouldHave(attribute(ATTRIBUTE_HREF, mainPageUrl + href));
     }

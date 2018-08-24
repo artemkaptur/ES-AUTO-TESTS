@@ -1,8 +1,10 @@
-package com.epam.esauto.steps;
+package com.epam.esauto.steps.account_management.profile_editing;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.epam.esauto.entity.User;
+import com.epam.esauto.steps.MainPageSteps;
+import com.epam.esauto.steps.account_management.login.LoginSteps;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -364,7 +366,7 @@ public class EditProfileSteps {
         refresh();
         $(By.xpath(userBtnXpath)).click();
         if (!$(By.xpath(logoutBtnXpath)).isDisplayed()) {
-            mainPageSteps.iOpenLoginForm();
+            mainPageSteps.clickLoginButton();
             loginSteps.iLoginAsAUser(userName);
             $(By.xpath(userBtnXpath)).click();
         }

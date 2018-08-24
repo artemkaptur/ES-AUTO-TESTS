@@ -1,4 +1,4 @@
-package com.epam.esauto.steps;
+package com.epam.esauto.steps.header_footer;
 
 import com.codeborne.selenide.Condition;
 import cucumber.api.java.en.And;
@@ -14,7 +14,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.WebDriverRunner.url;
-import static com.epam.esauto.steps.StepUtils.*;
+import static com.epam.esauto.steps.header_footer.StepUtils.*;
 
 public class FooterSteps {
 
@@ -37,12 +37,12 @@ public class FooterSteps {
     private String socialBtnXpath;
 
     @When("^I click main footer logo$")
-    public void iClickMainFooterLogo() throws Throwable {
+    public void iClickMainFooterLogo() {
         $(By.xpath(mainPageFooterLogoXpath)).click();
     }
 
     @Then("^page with url \"([^\"]*)\" should be open$")
-    public void pageWithShouldBeOpen(String url) throws Throwable {
+    public void pageWithShouldBeOpen(String url) {
         var errorMessage = String.format("Page with url %s has not opened", url);
         Assert.assertEquals(errorMessage, getFullUrl(mainPageUrl, url), url());
     }
@@ -53,32 +53,32 @@ public class FooterSteps {
     }
 
     @Then("^footer should have social button \"([^\"]*)\"$")
-    public void footerShouldHaveSocialButton(String socialButtonName) throws Throwable {
+    public void footerShouldHaveSocialButton(String socialButtonName) {
         $$(By.xpath(socialBtnXpath))
                 .find(Condition.attribute(ATTRIBUTE_CLASS, "icon-" + socialButtonName))
                 .shouldBe(visible);
     }
 
     @Then("^footer link with text \"([^\"]*)\" should have valid href \"([^\"]*)\"$")
-    public void footerLinkWithTextShouldHaveValidHref(String text, String href) throws Throwable {
+    public void footerLinkWithTextShouldHaveValidHref(String text, String href) {
         $$(By.xpath(footerLinkXpath)).find(text(text))
-                .shouldHave(attribute(ATTRIBUTE_HREF, mainPageUrl + href));
+                .shouldHave(attribute(ATTRIBUTE_HREF, getFullUrl(mainPageUrl, href)));
     }
 
     @When("^I click footer link with text \"([^\"]*)\"$")
-    public void iClickFooterLinkWithText(String text) throws Throwable {
+    public void iClickFooterLinkWithText(String text) {
         $$(By.xpath(footerLinkXpath)).find(text(text)).click();
     }
 
     @And("^social button \"([^\"]*)\" should have valid href \"([^\"]*)\"$")
-    public void socialButtonShouldHaveValidHref(String socialButtonName, String href) throws Throwable {
+    public void socialButtonShouldHaveValidHref(String socialButtonName, String href) {
         $$(By.xpath(socialBtnXpath))
                 .find(Condition.attribute(ATTRIBUTE_CLASS, "icon-" + socialButtonName))
                 .shouldHave(attribute(ATTRIBUTE_HREF, href));
     }
 
     @When("^I click H&P footer logo$")
-    public void iClickHPFooterLogo() throws Throwable {
+    public void iClickHPFooterLogo() {
         $(By.xpath(hpFooterLogoXpath)).click();
     }
 }

@@ -1,4 +1,4 @@
-package com.epam.esauto.steps;
+package com.epam.esauto.steps.account_management.login;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;

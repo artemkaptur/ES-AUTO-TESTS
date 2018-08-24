@@ -1,12 +1,4 @@
-package com.epam.esauto.steps;
-
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.switchTo;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static com.epam.esauto.entity.UserProvider.getUser;
-import static com.epam.esauto.util.DataHolder.getRegistrationPositiveTestUser;
+package com.epam.esauto.steps.account_management.login;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
@@ -20,6 +12,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.epam.esauto.entity.UserProvider.getUser;
+import static com.epam.esauto.util.DataHolder.getRegistrationPositiveTestUser;
 
 public class LoginSteps {
     private static final int TRIPLE_DEFAULT_TIMEOUT = 12000;

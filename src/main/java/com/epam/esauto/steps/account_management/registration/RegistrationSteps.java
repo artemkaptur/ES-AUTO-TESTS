@@ -1,11 +1,4 @@
-package com.epam.esauto.steps;
-
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static com.epam.esauto.entity.UserProvider.getUser;
-import static com.epam.esauto.util.DataHolder.getRegistrationPositiveTestUser;
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+package com.epam.esauto.steps.account_management.registration;
 
 import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
@@ -18,6 +11,13 @@ import org.springframework.beans.factory.annotation.Value;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.epam.esauto.entity.UserProvider.getUser;
+import static com.epam.esauto.util.DataHolder.getRegistrationPositiveTestUser;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 public class RegistrationSteps {
 

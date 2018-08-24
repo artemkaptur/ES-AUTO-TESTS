@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.codeborne.selenide.Condition;
-import com.epam.esauto.steps.LoginSteps;
+import com.epam.esauto.steps.account_management.login.LoginSteps;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;

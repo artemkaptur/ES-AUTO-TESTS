@@ -4,15 +4,10 @@ import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@ComponentScan(basePackages =  "com.epam.esauto")
-@PropertySources({
-        @PropertySource("classpath:mainpage.properties"),
-        @PropertySource("classpath:editprofile.properties"),
-        @PropertySource("classpath:content.properties"),
-        @PropertySource("classpath:homeprop.properties"),
-        @PropertySource("classpath:login.properties"),
-        @PropertySource("classpath:registration.properties"),
-        @PropertySource("classpath:yandex.properties")})
+@ComponentScan(basePackages = "com.epam.esauto")
+@PropertySource({"classpath:mainpage.properties", "classpath:editprofile.properties", "classpath:content.properties",
+        "classpath:homeprop.properties", "classpath:login.properties", "classpath:registration.properties",
+        "classpath:headerFooter.properties", "classpath:yandex.properties"})
 public class AppConfig {
 
     @Bean
