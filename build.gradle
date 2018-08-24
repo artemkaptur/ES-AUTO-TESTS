@@ -10,7 +10,7 @@ ext {
     springVersion = '5.0.7.RELEASE'
 }
 
-mainClassName = 'CucumberRunner'
+mainClassName = 'App'
 sourceCompatibility = JavaVersion.VERSION_1_10
 targetCompatibility = JavaVersion.VERSION_1_10
 
