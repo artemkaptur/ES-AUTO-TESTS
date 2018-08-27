@@ -151,17 +151,21 @@ Feature: Evening Standard profile editing positive tests
     Then I login as a user "GMAIL_MAIL_USER"
 
   # As a user
-  # I want to change my email and can't login with old email
-  # So that I see warning message after login with old email
+  # I want to change my email and login with it
+  # So that I change my email in profile edit section and login with new email
   Scenario: Can't login with old email after changing it
     When I click on Edit profile subsection button on profile page
     And I submit edit form with "GMAIL_MAIL_USER_NEW_EMAIL" email
-    And message about successful saving after profile editing is visible on edit form
-    And click logout button
+    Then message about successful saving after profile editing is visible on edit form
+    And I see that email field has "GMAIL_MAIL_USER_NEW_EMAIL" email
+    Then click logout button
     And logout button doesn't exist
     And I open login form
-    And I login as a user "GMAIL_MAIL_USER"
-    Then "Invalid login or password." warning message should be shown
+    And I login as a user "GMAIL_MAIL_USER_NEW_EMAIL"
+    And I open profile page
+    And I click on Edit profile subsection button on profile page
+    And I submit edit form with "GMAIL_MAIL_USER" email
+    Then message about successful saving after profile editing is visible on edit form
 
   # As a user
   # I want to see what comments i have left
@@ -171,3 +175,4 @@ Feature: Evening Standard profile editing positive tests
     And I open profile page
     And I click on the Comments subsection button on profile page
     Then I verify my comment exists in the Comments subsection button on profile page
+    

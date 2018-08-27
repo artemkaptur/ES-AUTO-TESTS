@@ -285,11 +285,12 @@ public class EditProfileSteps {
         $(By.xpath(editFormXpath + savingSuccessfulMessageXpath)).shouldBe(Condition.visible);
     }
 
-    @Then("^I see that i have changed country successfully$")
-    public void iSeeThatIHaveChangedCountrySuccessfully() {
+    @And("^I see that email field has \"([^\"]*)\" email$")
+    public void iSeeThatEmailFieldHasEmail(String userName) {
         refresh();
-        Assert.assertEquals("Required option is not selected", "China",
-                $(By.id(countrySelectId)).getSelectedOption().getText());
+        iClickOnEditProfileSubsectionButton();
+        Assert.assertEquals("Email hasn't been changed",
+                getUser(userName).getEsLogin(), $(By.id(editEmailInputId)).getValue());
     }
 
     @And("^I select \"([^\"]*)\" from country Select dropdown on edit form$")
@@ -371,7 +372,7 @@ public class EditProfileSteps {
     @And("^I submit edit form with \"([^\"]*)\" email$")
     public void iSubmitEditFormWithEmail(String userName) {
         $(By.id(editEmailInputId)).clear();
-        $(By.id(editEmailInputId)).setValue(getUser(userName).getMailLogin());
+        $(By.id(editEmailInputId)).setValue(getUser(userName).getEsLogin());
         $(By.xpath(editFormXpath + saveBtnXpath)).click();
     }
 
@@ -402,7 +403,6 @@ public class EditProfileSteps {
                 .shouldBe(Condition.visible)
                 .shouldHave(Condition.text(COMMENT));
     }
-
 
 
 }
