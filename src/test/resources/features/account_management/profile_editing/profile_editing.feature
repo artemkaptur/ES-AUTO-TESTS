@@ -2,7 +2,7 @@ Feature: Evening Standard profile editing positive tests
 
   Background:
     Given I open the main page
-    And I check if i logged in as user "GMAIL_MAIL_USER_NEW_PASSWORD"
+    And I check if i logged in as user "GMAIL_MAIL_USER"
     And I open profile page
 
   # As a user
@@ -131,17 +131,24 @@ Feature: Evening Standard profile editing positive tests
     Then warning message about not valid password repeating is visible
 
   # As a user
-  # I want to see successful password changing message after changing it
-  # So that I see this message after submitting password changing form
+  # I want to change my password
+  # So that I submit password changing form with new password and then try to login with this password
   Scenario: Changing password without mistakes
     When I click on the Change password subsection button on profile page
     And I change "GMAIL_MAIL_USER" password to "GMAIL_MAIL_USER_NEW_PASSWORD" password
-    And message about successful password changing is visible on password changing form
+    Then message about successful password changing is visible on password changing form
     And click logout button
     And logout button doesn't exist
     And I open login form
     And I login as a user "GMAIL_MAIL_USER_NEW_PASSWORD"
-    # Then logout button exists
+    And I open profile page
+    And I click on the Change password subsection button on profile page
+    And I change "GMAIL_MAIL_USER_NEW_PASSWORD" password to "GMAIL_MAIL_USER" password
+    Then message about successful password changing is visible on password changing form
+    And click logout button
+    And logout button doesn't exist
+    And I open login form
+    Then I login as a user "GMAIL_MAIL_USER"
 
   # As a user
   # I want to change my email and can't login with old email
