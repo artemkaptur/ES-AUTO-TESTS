@@ -22,6 +22,7 @@ import static com.epam.esauto.entity.UserProvider.getUser;
 public class EditProfileSteps {
 
     private static final String BTN_GREEN_COLOR = "rgba(30, 130, 76, 1)";
+    private static final String BTN_RED_COLOR = "rgba(220, 6, 43, 1)";
     private static final String NEW_FIRST_NAME = "Robert";
     private static final String COMMENT = "Good article";
     private static final String SUCCESSFUL_SAVING_MESSAGE = "Changes have been saved.";
@@ -168,8 +169,16 @@ public class EditProfileSteps {
 
     @Then("^I see that all subscription buttons on Newsletters form have changed color to green$")
     public void iSeeThatAllSubscriptionButtonsHaveChangedColorToGreen() {
+        refresh();
         Stream<SelenideElement> stream = $$(By.className(subBtnClassName)).stream();
         stream.forEach(btn -> btn.shouldHave(Condition.cssValue("background-color", BTN_GREEN_COLOR)));
+    }
+
+    @Then("^I see that all subscription buttons on Newsletters form have changed color to red$")
+    public void iSeeThatAllSubscriptionButtonsOnNewslettersFormHaveChangedColorToRed() {
+        refresh();
+        Stream<SelenideElement> stream = $$(By.className(subBtnClassName)).stream();
+        stream.forEach(btn -> btn.shouldHave(Condition.cssValue("background-color", BTN_RED_COLOR)));
     }
 
     @And("^I click newsletters submit button$")
@@ -328,7 +337,6 @@ public class EditProfileSteps {
         $(By.xpath(newslettersFormXpath + savingSuccessfulMessageXpath))
                 .shouldBe(Condition.visible)
                 .shouldHave(Condition.text(SUCCESSFUL_SAVING_MESSAGE));
-        refresh();
     }
 
     @And("^I change \"([^\"]*)\" password to \"([^\"]*)\" password$")
@@ -387,4 +395,6 @@ public class EditProfileSteps {
                 .shouldBe(Condition.visible)
                 .shouldHave(Condition.text(COMMENT));
     }
+
+
 }

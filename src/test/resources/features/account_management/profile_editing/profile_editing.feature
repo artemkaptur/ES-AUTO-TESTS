@@ -2,7 +2,7 @@ Feature: Evening Standard profile editing positive tests
 
   Background:
     Given I open the main page
-    And I check if i logged in as user "GMAIL_MAIL_USER"
+    And I check if i logged in as user "GMAIL_MAIL_USER_NEW_PASSWORD"
     And I open profile page
 
   # As a user
@@ -15,6 +15,10 @@ Feature: Evening Standard profile editing positive tests
     And I click newsletters submit button
     And message about successful saving after newsletters configuring is visible
     Then I see that all subscription buttons on Newsletters form have changed color to green
+    And I click on all subscription buttons on Newsletters form
+    And I click newsletters submit button
+    And message about successful saving after newsletters configuring is visible
+    Then I see that all subscription buttons on Newsletters form have changed color to red
 
   # As a user
   # I want to see profile editing form
