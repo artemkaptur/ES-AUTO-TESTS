@@ -285,16 +285,23 @@ public class EditProfileSteps {
         $(By.xpath(editFormXpath + savingSuccessfulMessageXpath)).shouldBe(Condition.visible);
     }
 
-    @And("^I select new country from country Select dropdown on edit form$")
-    public void iSelectChinaAsCountry() {
-        var newCountry = "China";
-        $(By.id(countrySelectId)).selectOptionContainingText(newCountry);
-    }
-
     @Then("^I see that i have changed country successfully$")
     public void iSeeThatIHaveChangedCountrySuccessfully() {
         refresh();
         Assert.assertEquals("Required option is not selected", "China",
+                $(By.id(countrySelectId)).getSelectedOption().getText());
+    }
+
+    @And("^I select \"([^\"]*)\" from country Select dropdown on edit form$")
+    public void iSelectFromCountrySelectDropdownOnEditForm(String country) {
+        $(By.id(countrySelectId)).selectOptionContainingText(country);
+    }
+
+    @Then("^I see that i have chosen \"([^\"]*)\" in Select dropdown successfully$")
+    public void iSeeThatIHaveChosenInSelectDropdownSuccessfully(String chosenCountry) {
+        refresh();
+        iClickOnEditProfileSubsectionButton();
+        Assert.assertEquals("Required option is not selected", chosenCountry,
                 $(By.id(countrySelectId)).getSelectedOption().getText());
     }
 
@@ -395,6 +402,7 @@ public class EditProfileSteps {
                 .shouldBe(Condition.visible)
                 .shouldHave(Condition.text(COMMENT));
     }
+
 
 
 }

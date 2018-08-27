@@ -94,10 +94,13 @@ Feature: Evening Standard profile editing positive tests
   # So that i select other country in Select menu and save the changes
   Scenario: Editing profile country
     When I click on Edit profile subsection button on profile page
-    And I select new country from country Select dropdown on edit form
+    And I select "China" from country Select dropdown on edit form
     And I click on Submit button on edit form
     And message about successful saving after profile editing is visible on edit form
-    Then I see that i have changed country successfully
+    Then I see that i have chosen "China" in Select dropdown successfully
+    And I select "Brazil" from country Select dropdown on edit form
+    And I click on Submit button on edit form
+    And message about successful saving after profile editing is visible on edit form
 
   # As a user
   # I want to see warning message if i use figures in my first name
@@ -138,7 +141,7 @@ Feature: Evening Standard profile editing positive tests
     And logout button doesn't exist
     And I open login form
     And I login as a user "GMAIL_MAIL_USER_NEW_PASSWORD"
-    Then logout button exists
+    # Then logout button exists
 
   # As a user
   # I want to change my email and can't login with old email
