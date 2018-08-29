@@ -1,11 +1,14 @@
 package com.epam.esauto.steps.account_management.registration;
 
+import com.epam.esauto.entity.User;
+import com.epam.esauto.util.DataHolder;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Arrays;
@@ -16,12 +19,16 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.epam.esauto.entity.UserProvider.getUser;
-import static com.epam.esauto.util.DataHolder.getRegistrationPositiveTestUser;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 public class RegistrationSteps {
 
     private static final int TRIPLE_DEFAULT_TIMEOUT = 12000;
+    private static final String USER_TEST_NAME_FIRST = "registrationPositiveTestUserFirst";
+    private static final String USER_TEST_NAME_SECOND = "registrationPositiveTestUserSecond";
+
+    @Autowired
+    private DataHolder dataHolder;
 
     @Value("${registrationPage.email.input.id}")
     private String emailInputId;
@@ -165,11 +172,13 @@ public class RegistrationSteps {
 
     @When("^I fill registration form with random email, \"([^\"]*)\", \"([^\"]*)\"$")
     public void iFillRegistrationFormWithRandomEmail(String firstname, String lastname) {
-        getRegistrationPositiveTestUser().setEsLogin(randomAlphabetic(8) + "@"
+        User user = new User();
+        user.setEsLogin(randomAlphabetic(8) + "@"
                 + randomAlphabetic(4) + "."
                 + randomAlphabetic(3));
-        $(By.id(emailInputId)).setValue(getRegistrationPositiveTestUser().getEsLogin());
+        $(By.id(emailInputId)).setValue(user.getEsLogin());
         fillFirstAndLastNameAndContinueRegistration(firstname, lastname);
+        dataHolder.put(USER_TEST_NAME_FIRST,user);
     }
 
     private void fillFirstAndLastNameAndContinueRegistration(String firstname, String lastname) {
@@ -243,6 +252,7 @@ public class RegistrationSteps {
 
     @And("^fill registration form mandatory fields with:$")
     public void fillRegistrationFormMandatoryFieldsWith(DataTable data) {
+        User user = (User) dataHolder.getByKey(USER_TEST_NAME_FIRST);
         Map<String, String> mandatoryFieldsData = data.asMap(String.class, String.class);
         $(By.id(selectCountryId)).waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT)
                 .selectOption(mandatoryFieldsData.get("country"));
@@ -252,11 +262,12 @@ public class RegistrationSteps {
                 .selectOption(mandatoryFieldsData.get("gender"));
         $(By.id(nicknameInputId)).waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT)
                 .setValue(randomAlphabetic(14));
-        getRegistrationPositiveTestUser().setEsPassword(mandatoryFieldsData.get("password"));
+        user.setEsPassword(mandatoryFieldsData.get("password"));
         $(By.id(registrationFormPasswordId)).waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT)
                 .setValue(mandatoryFieldsData.get("password"));
         $(By.id(registrationFormPasswordConfirmationId)).waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT)
                 .setValue(mandatoryFieldsData.get("password"));
+        dataHolder.put(USER_TEST_NAME_SECOND,user);
     }
 
     @And("^fill zip code field with ([^\"]*)$")
