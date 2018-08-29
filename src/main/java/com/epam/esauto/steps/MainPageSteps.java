@@ -5,6 +5,7 @@ import com.epam.esauto.spring.AppConfig;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
@@ -35,6 +36,9 @@ public class MainPageSteps {
 
     @Value("${mainPage.registration.btn.xpath}")
     private String registrationBtnXpath;
+
+    @Value("${mainPage.logoGoLondon.xpath}")
+    private String mainPageLogoGoLondonXpath;
 
     @Given("^I open the main page$")
     public void iOpenTheMainPage() {
@@ -83,5 +87,10 @@ public class MainPageSteps {
     public void clickLoginButton() {
         $(By.xpath(loginBtnXpath)).click();
         switchTo().window("Log in");
+    }
+
+    @When("^I click logo 'GO London'$")
+    public void iClickLogoGOLondon() {
+        $(By.xpath(mainPageLogoGoLondonXpath)).click();
     }
 }

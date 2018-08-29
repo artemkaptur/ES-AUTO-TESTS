@@ -1,26 +1,22 @@
 package com.epam.esauto.util;
 
+import com.epam.esauto.entity.Order;
 import com.epam.esauto.entity.User;
+import org.springframework.stereotype.Component;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+@Component
 public class DataHolder {
 
-    private static User registrationPositiveTestUser = new User();
-    private static String argument;
+    private Map<String, Object> map = new ConcurrentHashMap<>();
 
-
-    public static User getRegistrationPositiveTestUser() {
-        return registrationPositiveTestUser;
+    public Object getByKey(String key) {
+        return map.get(key);
     }
 
-    public void setRegistrationPositiveTestUser(User registrationPositiveTestUser) {
-        this.registrationPositiveTestUser = registrationPositiveTestUser;
-    }
-
-    public static String getArgument() {
-        return argument;
-    }
-
-    public static void setArgument(String arg) {
-        argument = arg;
+    public void put(String key, Object object) {
+        this.map.putIfAbsent(key,object);
     }
 }

@@ -8,7 +8,8 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @PropertySource(value = {"classpath:editprofile.properties", "classpath:content.properties",
         "classpath:homeprop.properties", "classpath:login.properties",
         "classpath:registration.properties", "classpath:headerFooter.properties",
-        "classpath:yandex.properties", "classpath:grid.properties", "classpath:mobile.properties"}, encoding = "UTF-8")
+        "classpath:yandex.properties", "classpath:grid.properties", "classpath:mobile.properties",
+        "classpath:searchProperties.properties","classpath:goLondon.properties", "classpath:bookATicket.properties","classpath:articleGoLondon.properties"}, encoding = "UTF-8")
 public class AppConfig {
     @Bean
     public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {

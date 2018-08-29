@@ -10,6 +10,6 @@ Feature: Evening Standard "GO London" section - Footer
     When I click footer "<link>"
     Then privacy "<page>" is opened
     Examples:
-  |link|page|
-  |Privacy policy|Privacy Notice|
-  |Jobs|Find a job|
+      | link           | page           |
+      | Privacy policy | Privacy Notice |
+      | Jobs           | Find a job     |

@@ -8,7 +8,7 @@ Feature: Header Subsections Tests
   # I want to see all available sections and subsections
   # So when I move mouse at section's name then I see the list of subsections
   Scenario: Verify that drop-down list on News section is displayed when user moves mouse on it and has correct link
-    Then main menu item number "1" "News" contains list of sub-menus and they have valid href
+    Then "main-menu" item number "1" "News" contains list of sub-menus and they have valid href
       | London    | news/london    |
       | Crime     | news/crime     |
       | Politics  | news/politics  |
@@ -20,7 +20,7 @@ Feature: Header Subsections Tests
       | Health    | news/health    |
 
   Scenario: Verify that drop-down list on Comment section is displayed when user moves mouse on it and has correct link
-    Then main menu item number "2" "Comment" contains list of sub-menus and they have valid href
+    Then "main-menu" item number "2" "Comment" contains list of sub-menus and they have valid href
       | Editorials         | author/evening-standard-comment-1                                                   |
       | The Londoner       | news/londoners-diary                                                                |
       | Cartoon            | news/london/the-evening-standard-political-cartoon-by-christian-adams-a3530851.html |
@@ -35,7 +35,7 @@ Feature: Header Subsections Tests
       | Sam Leith          | author/sam-leith                                                                    |
 
   Scenario: Verify that drop-down list on Football section is displayed when user moves mouse on it and has correct link
-    Then main menu item number "3" "Football" contains list of sub-menus and they have valid href
+    Then "main-menu" item number "3" "Football" contains list of sub-menus and they have valid href
       | Arsenal           | sport/football/arsenal          |
       | Chelsea           | sport/football/chelsea          |
       | Crystal Palace    | sport/football/crystalpalace    |
@@ -51,7 +51,7 @@ Feature: Header Subsections Tests
       | Other sport       | sport                           |
 
   Scenario: Verify that drop-down list on GoLondon section is displayed when user moves mouse on it and has correct link
-    Then main menu item number "4" "GO London" contains list of sub-menus and they have valid href
+    Then "main-menu" item number "4" "GO London" contains list of sub-menus and they have valid href
       | Tickets      | go/london/theatre/tickets |
       | Restaurants  | go/london/restaurants     |
       | Pubs & Bars  | go/london/bars            |
@@ -62,7 +62,7 @@ Feature: Header Subsections Tests
       | Things to do | go/london/attractions     |
 
   Scenario: Verify that drop-down list on Lifestyle section is displayed when user move mouse on it and has correct link
-    Then main menu item number "5" "Lifestyle" contains list of sub-menus and they have valid href
+    Then "main-menu" item number "5" "Lifestyle" contains list of sub-menus and they have valid href
       | Fashion          | fashion                |
       | Tech             | tech                   |
       | ES Best          | shopping/esbest        |
@@ -75,20 +75,20 @@ Feature: Header Subsections Tests
       | ES Magazine      | lifestyle/esmagazine   |
 
   Scenario: Verify that drop-down list on Showbiz sections is displayed when user moves mouse on it and has correct link
-    Then main menu item number "6" "Showbiz" contains list of sub-menus and they have valid href
+    Then "main-menu" item number "6" "Showbiz" contains list of sub-menus and they have valid href
       | Staying In | stayingin        |
       | TV reviews | topic/tv-reviews |
       | Music news | stayingin/music  |
 
   Scenario: Verify that drop-down list on Homes&Property section is displayed when user moves mouse on it and has correct link
-    Then main menu item number "7" "Homes & Property" contains list of sub-menus and they have valid href
+    Then "main-menu" item number "7" "Homes & Property" contains list of sub-menus and they have valid href
       | Property News | http://www.homesandproperty.co.uk/property-news |
       | Area Guides   | http://www.homesandproperty.co.uk/area-guides   |
       | Home & Garden | http://www.homesandproperty.co.uk/home-garden   |
       | Luxury        | http://www.homesandproperty.co.uk/luxury        |
 
   Scenario: Verify that drop-down list on FutureLondon section is displayed when user moves mouse on it and has correct link
-    Then main menu item number "9" "Future London" contains list of sub-menus and they have valid href
+    Then "main-menu" item number "9" "Future London" contains list of sub-menus and they have valid href
       | Clean Air | futurelondon/cleanair |
       | Health    | futurelondon/health   |
 
