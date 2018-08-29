@@ -90,7 +90,7 @@
 	2.5 Background has black color (s - 1)
 
 3. Footer
-	3.1 Check "Navifation" section
+	3.1 Check "Navigation" section
 
 #### Cross-platform and cross-browser compatibility  
 
