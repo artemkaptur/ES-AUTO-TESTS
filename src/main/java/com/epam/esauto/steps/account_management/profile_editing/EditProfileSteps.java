@@ -22,6 +22,7 @@ import static com.epam.esauto.entity.UserProvider.getUser;
 public class EditProfileSteps {
 
     private static final String BTN_GREEN_COLOR = "rgba(30, 130, 76, 1)";
+    private static final String BTN_RED_COLOR = "rgba(220, 6, 43, 1)";
     private static final String NEW_FIRST_NAME = "Robert";
     private static final String COMMENT = "Good article";
     private static final String SUCCESSFUL_SAVING_MESSAGE = "Changes have been saved.";
@@ -168,8 +169,16 @@ public class EditProfileSteps {
 
     @Then("^I see that all subscription buttons on Newsletters form have changed color to green$")
     public void iSeeThatAllSubscriptionButtonsHaveChangedColorToGreen() {
+        refresh();
         Stream<SelenideElement> stream = $$(By.className(subBtnClassName)).stream();
         stream.forEach(btn -> btn.shouldHave(Condition.cssValue("background-color", BTN_GREEN_COLOR)));
+    }
+
+    @Then("^I see that all subscription buttons on Newsletters form have changed color to red$")
+    public void iSeeThatAllSubscriptionButtonsOnNewslettersFormHaveChangedColorToRed() {
+        refresh();
+        Stream<SelenideElement> stream = $$(By.className(subBtnClassName)).stream();
+        stream.forEach(btn -> btn.shouldHave(Condition.cssValue("background-color", BTN_RED_COLOR)));
     }
 
     @And("^I click newsletters submit button$")
@@ -276,16 +285,24 @@ public class EditProfileSteps {
         $(By.xpath(editFormXpath + savingSuccessfulMessageXpath)).shouldBe(Condition.visible);
     }
 
-    @And("^I select new country from country Select dropdown on edit form$")
-    public void iSelectChinaAsCountry() {
-        var newCountry = "China";
-        $(By.id(countrySelectId)).selectOptionContainingText(newCountry);
+    @And("^I see that email field has \"([^\"]*)\" email$")
+    public void iSeeThatEmailFieldHasEmail(String userName) {
+        refresh();
+        iClickOnEditProfileSubsectionButton();
+        Assert.assertEquals("Email hasn't been changed",
+                getUser(userName).getEsLogin(), $(By.id(editEmailInputId)).getValue());
     }
 
-    @Then("^I see that i have changed country successfully$")
-    public void iSeeThatIHaveChangedCountrySuccessfully() {
+    @And("^I select \"([^\"]*)\" from country Select dropdown on edit form$")
+    public void iSelectFromCountrySelectDropdownOnEditForm(String country) {
+        $(By.id(countrySelectId)).selectOptionContainingText(country);
+    }
+
+    @Then("^I see that i have chosen \"([^\"]*)\" in Select dropdown successfully$")
+    public void iSeeThatIHaveChosenInSelectDropdownSuccessfully(String chosenCountry) {
         refresh();
-        Assert.assertEquals("Required option is not selected", "China",
+        iClickOnEditProfileSubsectionButton();
+        Assert.assertEquals("Required option is not selected", chosenCountry,
                 $(By.id(countrySelectId)).getSelectedOption().getText());
     }
 
@@ -328,7 +345,6 @@ public class EditProfileSteps {
         $(By.xpath(newslettersFormXpath + savingSuccessfulMessageXpath))
                 .shouldBe(Condition.visible)
                 .shouldHave(Condition.text(SUCCESSFUL_SAVING_MESSAGE));
-        refresh();
     }
 
     @And("^I change \"([^\"]*)\" password to \"([^\"]*)\" password$")
@@ -356,7 +372,7 @@ public class EditProfileSteps {
     @And("^I submit edit form with \"([^\"]*)\" email$")
     public void iSubmitEditFormWithEmail(String userName) {
         $(By.id(editEmailInputId)).clear();
-        $(By.id(editEmailInputId)).setValue(getUser(userName).getMailLogin());
+        $(By.id(editEmailInputId)).setValue(getUser(userName).getEsLogin());
         $(By.xpath(editFormXpath + saveBtnXpath)).click();
     }
 
@@ -387,4 +403,6 @@ public class EditProfileSteps {
                 .shouldBe(Condition.visible)
                 .shouldHave(Condition.text(COMMENT));
     }
+
+
 }

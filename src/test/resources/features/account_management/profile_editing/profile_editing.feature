@@ -15,6 +15,10 @@ Feature: Evening Standard profile editing positive tests
     And I click newsletters submit button
     And message about successful saving after newsletters configuring is visible
     Then I see that all subscription buttons on Newsletters form have changed color to green
+    And I click on all subscription buttons on Newsletters form
+    And I click newsletters submit button
+    And message about successful saving after newsletters configuring is visible
+    Then I see that all subscription buttons on Newsletters form have changed color to red
 
   # As a user
   # I want to see profile editing form
@@ -90,10 +94,13 @@ Feature: Evening Standard profile editing positive tests
   # So that i select other country in Select menu and save the changes
   Scenario: Editing profile country
     When I click on Edit profile subsection button on profile page
-    And I select new country from country Select dropdown on edit form
+    And I select "China" from country Select dropdown on edit form
     And I click on Submit button on edit form
     And message about successful saving after profile editing is visible on edit form
-    Then I see that i have changed country successfully
+    Then I see that i have chosen "China" in Select dropdown successfully
+    And I select "Brazil" from country Select dropdown on edit form
+    And I click on Submit button on edit form
+    And message about successful saving after profile editing is visible on edit form
 
   # As a user
   # I want to see warning message if i use figures in my first name
@@ -124,30 +131,41 @@ Feature: Evening Standard profile editing positive tests
     Then warning message about not valid password repeating is visible
 
   # As a user
-  # I want to see successful password changing message after changing it
-  # So that I see this message after submitting password changing form
+  # I want to change my password
+  # So that I submit password changing form with new password and then try to login with this password
   Scenario: Changing password without mistakes
     When I click on the Change password subsection button on profile page
     And I change "GMAIL_MAIL_USER" password to "GMAIL_MAIL_USER_NEW_PASSWORD" password
-    And message about successful password changing is visible on password changing form
+    Then message about successful password changing is visible on password changing form
     And click logout button
     And logout button doesn't exist
     And I open login form
     And I login as a user "GMAIL_MAIL_USER_NEW_PASSWORD"
-    Then logout button exists
-
-  # As a user
-  # I want to change my email and can't login with old email
-  # So that I see warning message after login with old email
-  Scenario: Can't login with old email after changing it
-    When I click on Edit profile subsection button on profile page
-    And I submit edit form with "GMAIL_MAIL_USER_NEW_EMAIL" email
-    And message about successful saving after profile editing is visible on edit form
+    And I open profile page
+    And I click on the Change password subsection button on profile page
+    And I change "GMAIL_MAIL_USER_NEW_PASSWORD" password to "GMAIL_MAIL_USER" password
+    Then message about successful password changing is visible on password changing form
     And click logout button
     And logout button doesn't exist
     And I open login form
-    And I login as a user "GMAIL_MAIL_USER"
-    Then "Invalid login or password." warning message should be shown
+    Then I login as a user "GMAIL_MAIL_USER"
+
+  # As a user
+  # I want to change my email and login with it
+  # So that I change my email in profile edit section and login with new email
+  Scenario: Can't login with old email after changing it
+    When I click on Edit profile subsection button on profile page
+    And I submit edit form with "GMAIL_MAIL_USER_NEW_EMAIL" email
+    Then message about successful saving after profile editing is visible on edit form
+    And I see that email field has "GMAIL_MAIL_USER_NEW_EMAIL" email
+    Then click logout button
+    And logout button doesn't exist
+    And I open login form
+    And I login as a user "GMAIL_MAIL_USER_NEW_EMAIL"
+    And I open profile page
+    And I click on Edit profile subsection button on profile page
+    And I submit edit form with "GMAIL_MAIL_USER" email
+    Then message about successful saving after profile editing is visible on edit form
 
   # As a user
   # I want to see what comments i have left
@@ -157,3 +175,4 @@ Feature: Evening Standard profile editing positive tests
     And I open profile page
     And I click on the Comments subsection button on profile page
     Then I verify my comment exists in the Comments subsection button on profile page
+    
