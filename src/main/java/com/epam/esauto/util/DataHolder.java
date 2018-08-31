@@ -16,11 +16,11 @@ public class DataHolder {
         this.registrationPositiveTestUser = registrationPositiveTestUser;
     }
 
-    public static String getArgument(){
+    public static String getArgument() {
         return argument;
     }
 
-    public static void setArgument(String arg){
+    public static void setArgument(String arg) {
         argument = arg;
     }
 }

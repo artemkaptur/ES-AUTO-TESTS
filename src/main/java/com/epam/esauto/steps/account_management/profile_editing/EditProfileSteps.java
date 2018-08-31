@@ -103,10 +103,10 @@ public class EditProfileSteps {
     private String lastNameWarningMsgXpath;
 
     @Value("${accountPage.edit.password.name}")
-    private String passwordinputName;
+    private String passwordInputName;
 
     @Value("${accountPage.edit.newpassword.name}")
-    private String newPasswordinputName;
+    private String newPasswordInputName;
 
     @Value("${accountPage.edit.repeatpassword.name}")
     private String repeatPasswordInputName;
@@ -350,9 +350,9 @@ public class EditProfileSteps {
     @And("^I change \"([^\"]*)\" password to \"([^\"]*)\" password$")
     public void iChangePasswordToPassword(String userWithOldPass, String userWithNewPass) {
         User oldUser = getUser(userWithOldPass);
-        $(By.name(passwordinputName)).setValue(oldUser.getEsPassword());
+        $(By.name(passwordInputName)).setValue(oldUser.getEsPassword());
         User newUser = getUser(userWithNewPass);
-        $(By.name(newPasswordinputName)).setValue(newUser.getEsPassword());
+        $(By.name(newPasswordInputName)).setValue(newUser.getEsPassword());
         $(By.name(repeatPasswordInputName)).setValue(newUser.getEsPassword());
         $(By.xpath(passwordFormXpath + passwordSubmitBtnXpath))
                 .waitUntil(Condition.text("Save changes"), 6000).click();
@@ -361,9 +361,9 @@ public class EditProfileSteps {
     @And("^I change \"([^\"]*)\" password to \"([^\"]*)\" password with mistakes$")
     public void iChangePasswordToPasswordWithMistakes(String userWithOldPass, String userWithNewPass) {
         User oldUser = getUser(userWithOldPass);
-        $(By.name(passwordinputName)).setValue(oldUser.getEsPassword());
+        $(By.name(passwordInputName)).setValue(oldUser.getEsPassword());
         User newUser = getUser(userWithNewPass);
-        $(By.name(newPasswordinputName)).setValue(newUser.getEsPassword());
+        $(By.name(newPasswordInputName)).setValue(newUser.getEsPassword());
         $(By.name(repeatPasswordInputName)).setValue(newUser.getEsPassword() + "blabla");
         $(By.xpath(passwordFormXpath + passwordSubmitBtnXpath))
                 .waitUntil(Condition.text("Save changes"), 6000).click();
