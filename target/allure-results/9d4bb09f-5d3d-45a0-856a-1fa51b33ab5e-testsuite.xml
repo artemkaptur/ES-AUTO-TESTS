@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:test-suite start="1536057328654" stop="1536057367818" version="1.5.4" xmlns:ns2="urn:model.allure.qatools.yandex.ru">
+    <name>Evening standard login positive tests</name>
+    <description type="text"></description>
+    <test-cases>
+        <test-case start="1536057329472" stop="1536057367800" status="passed">
+            <name>I can login with correct credentials</name>
+            <title>I can login with correct credentials</title>
+            <description type="text"></description>
+            <steps>
+                <step start="1536057329487" stop="1536057346517" status="passed">
+                    <name>Given I open the main page</name>
+                    <title>Given I open the main page</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start="1536057346519" stop="1536057346836" status="passed">
+                    <name>Then logout button doesn't exist</name>
+                    <title>Then logout button doesn't exist</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start="1536057346837" stop="1536057348818" status="passed">
+                    <name>Then I open login form</name>
+                    <title>Then I open login form</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start="1536057348822" stop="1536057351433" status="passed">
+                    <name>When I login as a user "MAILRU_MAIL_USER"</name>
+                    <title>When I login as a user "MAILRU_MAIL_USER"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start="1536057351434" stop="1536057367798" status="passed">
+                    <name>Then click logout button</name>
+                    <title>Then click logout button</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+            </steps>
+            <attachments/>
+            <labels>
+                <label name="story" value="I can login with correct credentials"/>
+                <label name="feature" value="Evening standard login positive tests"/>
+                <label name="host" value="EPBYMINW4455"/>
+                <label name="thread" value="7572@EPBYMINW4455.main(1)"/>
+                <label name="framework" value="CucumberJVM"/>
+            </labels>
+        </test-case>
+    </test-cases>
+    <labels>
+        <label name="feature" value="Evening standard login positive tests"/>
+        <label name="language" value="JAVA"/>
+    </labels>
+</ns2:test-suite>

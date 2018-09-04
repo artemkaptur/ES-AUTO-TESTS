@@ -22,7 +22,7 @@ Feature: Evening standard registration positive tests
   Scenario: I can register with facebook
     When  I click facebook icon
     Then  new window with facebook login page should be opened
-    
+
   Scenario: I can register with twitter
     When  I click twitter icon
     Then  new window with twitter login page should be opened

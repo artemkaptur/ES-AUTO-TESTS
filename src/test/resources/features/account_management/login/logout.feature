@@ -9,6 +9,6 @@ Feature: Evening standard logout test
     Then  I open login form
 
   Scenario: I can logout
-    When  I login as a user "YANDEX_MAIL_USER"
+    When  I login as a user "MAILRU_MAIL_USER"
     And   click logout button
     Then  login button is displayed

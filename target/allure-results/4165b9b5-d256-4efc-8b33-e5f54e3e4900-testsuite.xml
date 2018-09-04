@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:test-suite start="1536057752438" stop="1536057796848" version="1.5.4" xmlns:ns2="urn:model.allure.qatools.yandex.ru">
+    <name>Evening standard registration fields validation second form</name>
+    <description type="text"></description>
+    <test-cases>
+        <test-case start="1536057753292" stop="1536057796828" status="passed">
+            <name>I can select only countries at select country drop-down</name>
+            <title>I can select only countries at select country drop-down</title>
+            <description type="text"></description>
+            <steps>
+                <step start="1536057753306" stop="1536057782689" status="passed">
+                    <name>Given I open the main page</name>
+                    <title>Given I open the main page</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start="1536057782691" stop="1536057786443" status="passed">
+                    <name>Given I click register button</name>
+                    <title>Given I click register button</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start="1536057786446" stop="1536057792044" status="passed">
+                    <name>Then I fill registration form with random email, "John", "Smith"</name>
+                    <title>Then I fill registration form with random email, "John", "Smith"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start="1536057792051" stop="1536057792230" status="passed">
+                    <name>When click on select country field</name>
+                    <title>When click on select country field</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start="1536057792231" stop="1536057796827" status="passed">
+                    <name>Then drop-down contains only countries</name>
+                    <title>Then drop-down contains only countries</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+            </steps>
+            <attachments/>
+            <labels>
+                <label name="story" value="I can select only countries at select country drop-down"/>
+                <label name="feature" value="Evening standard registration fields validation second form"/>
+                <label name="host" value="EPBYMINW4455"/>
+                <label name="thread" value="15736@EPBYMINW4455.main(1)"/>
+                <label name="framework" value="CucumberJVM"/>
+            </labels>
+        </test-case>
+    </test-cases>
+    <labels>
+        <label name="feature" value="Evening standard registration fields validation second form"/>
+        <label name="language" value="JAVA"/>
+    </labels>
+</ns2:test-suite>

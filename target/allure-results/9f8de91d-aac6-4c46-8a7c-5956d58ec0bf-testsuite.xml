@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:test-suite start="1536057368060" stop="1536057383670" version="1.5.4" xmlns:ns2="urn:model.allure.qatools.yandex.ru">
+    <name>Evening standard logout test</name>
+    <description type="text"></description>
+    <test-cases>
+        <test-case start="1536057368065" stop="1536057383670" status="passed">
+            <name>I can logout</name>
+            <title>I can logout</title>
+            <description type="text"></description>
+            <steps>
+                <step start="1536057368067" stop="1536057370829" status="passed">
+                    <name>Given I open the main page</name>
+                    <title>Given I open the main page</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start="1536057370830" stop="1536057371011" status="passed">
+                    <name>Then logout button doesn't exist</name>
+                    <title>Then logout button doesn't exist</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start="1536057371013" stop="1536057372366" status="passed">
+                    <name>Then I open login form</name>
+                    <title>Then I open login form</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start="1536057372368" stop="1536057374338" status="passed">
+                    <name>When I login as a user "MAILRU_MAIL_USER"</name>
+                    <title>When I login as a user "MAILRU_MAIL_USER"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start="1536057374339" stop="1536057383429" status="passed">
+                    <name>And click logout button</name>
+                    <title>And click logout button</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start="1536057383429" stop="1536057383669" status="passed">
+                    <name>Then login button is displayed</name>
+                    <title>Then login button is displayed</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+            </steps>
+            <attachments/>
+            <labels>
+                <label name="story" value="I can logout"/>
+                <label name="feature" value="Evening standard logout test"/>
+                <label name="host" value="EPBYMINW4455"/>
+                <label name="thread" value="7572@EPBYMINW4455.main(1)"/>
+                <label name="framework" value="CucumberJVM"/>
+            </labels>
+        </test-case>
+    </test-cases>
+    <labels>
+        <label name="feature" value="Evening standard logout test"/>
+        <label name="language" value="JAVA"/>
+    </labels>
+</ns2:test-suite>

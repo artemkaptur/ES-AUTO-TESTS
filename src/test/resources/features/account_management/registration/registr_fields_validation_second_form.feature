@@ -6,7 +6,7 @@ Feature: Evening standard registration fields validation second form
   Background:
     Given I open the main page
     Given I click register button
-    Then  I fill registration form with "YANDEX_MAIL_USER" email, "John", "Smith"
+    Then  I fill registration form with random email, "John", "Smith"
 
   Scenario: I receive warning message when passwords don't match
     When  fill registration form password fields with "test111", "test222"
@@ -38,7 +38,7 @@ Feature: Evening standard registration fields validation second form
   Scenario: I can open privacy police page
     When  I click on privacy police button
     Then  privacy police page is opened
-    
+
   Scenario Outline: I can't enter invalid zip code for US and UK
     When  select "United States of America" country
     And   fill zip code field with <zip code us>
