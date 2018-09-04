@@ -23,6 +23,10 @@ public class EditProfileSteps {
     private static final String NEW_FIRST_NAME = "Robert";
     private static final String COMMENT = "Great article";
     private static final String SUCCESSFUL_SAVING_MESSAGE = "Changes have been saved.";
+    private static final String PASSWORD_ADDITION = "blabla";
+
+    private static final int MAIN_WINDOW_INDEX = 0;
+    private static final long SAVING_PASSWORD_TIMEOUT = 6000;
 
     @Autowired
     private LoginSteps loginSteps;
@@ -358,7 +362,7 @@ public class EditProfileSteps {
         $(By.name(newPasswordInputName)).setValue(newUser.getEsPassword());
         $(By.name(repeatPasswordInputName)).setValue(newUser.getEsPassword());
         $(By.xpath(passwordFormXpath + passwordSubmitBtnXpath))
-                .waitUntil(Condition.text("Save changes"), 6000).click();
+                .waitUntil(Condition.text("Save changes"), SAVING_PASSWORD_TIMEOUT).click();
     }
 
     @And("^I change \"([^\"]*)\" password to \"([^\"]*)\" password with mistakes$")
@@ -367,9 +371,9 @@ public class EditProfileSteps {
         $(By.name(passwordInputName)).setValue(oldUser.getEsPassword());
         var newUser = getUser(userWithNewPass);
         $(By.name(newPasswordInputName)).setValue(newUser.getEsPassword());
-        $(By.name(repeatPasswordInputName)).setValue(newUser.getEsPassword() + "blabla");
+        $(By.name(repeatPasswordInputName)).setValue(newUser.getEsPassword() + PASSWORD_ADDITION);
         $(By.xpath(passwordFormXpath + passwordSubmitBtnXpath))
-                .waitUntil(Condition.text("Save changes"), 6000).click();
+                .waitUntil(Condition.text("Save changes"), SAVING_PASSWORD_TIMEOUT).click();
     }
 
     @And("^I submit edit form with \"([^\"]*)\" email$")
@@ -381,7 +385,7 @@ public class EditProfileSteps {
 
     @And("^I check if i logged in as user \"([^\"]*)\"$")
     public void iCheckIfILoggedInAsUser(String userName) {
-        switchTo().window(0);
+        switchTo().window(MAIN_WINDOW_INDEX);
         refresh();
         $(By.xpath(userBtnXpath)).click();
         if (!$(By.xpath(logoutBtnXpath)).isDisplayed()) {
