@@ -2,10 +2,8 @@ package com.epam.esauto.steps.account_management.profile_editing;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import com.epam.esauto.entity.User;
 import com.epam.esauto.steps.MainPageSteps;
 import com.epam.esauto.steps.account_management.login.LoginSteps;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -13,8 +11,6 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
-import java.util.stream.Stream;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -389,9 +385,12 @@ public class EditProfileSteps {
         refresh();
         $(By.xpath(userBtnXpath)).click();
         if (!$(By.xpath(logoutBtnXpath)).isDisplayed()) {
-            mainPageSteps.clickLoginButton();
-            loginSteps.iLoginAsAUser(userName);
+            openLoginFormLoginAsUserAndClickUserIcon(userName);
+        }
+        if (!getLoggedUserMail().equals(getUser(userName).getEsLogin())) {
+            mainPageSteps.clickLogoutButton();
             $(By.xpath(userBtnXpath)).click();
+            openLoginFormLoginAsUserAndClickUserIcon(userName);
         }
     }
 
@@ -417,5 +416,17 @@ public class EditProfileSteps {
         $(By.xpath(leftCommentXpath))
                 .shouldBe(Condition.visible)
                 .shouldHave(Condition.text(COMMENT));
+    }
+
+    private String getLoggedUserMail() {
+        iOpenProfilePage();
+        iClickOnEditProfileSubsectionButton();
+        return $(By.id(editEmailInputId)).getValue();
+    }
+
+    private void openLoginFormLoginAsUserAndClickUserIcon(String userName) {
+        mainPageSteps.clickLoginButton();
+        loginSteps.iLoginAsAUser(userName);
+        $(By.xpath(userBtnXpath)).click();
     }
 }
