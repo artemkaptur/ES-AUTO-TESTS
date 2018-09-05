@@ -1,4 +1,4 @@
-Feature: Evening Standard profile editing positive tests
+Feature: Evening Standard profile editing tests
 
   Background:
     Given I open the main page
@@ -123,34 +123,6 @@ Feature: Evening Standard profile editing positive tests
     Then warning message about not valid last name is visible on edit form
 
   # As a user
-  # I want to see warning message if i repeat new password with mistakes
-  # So that i see warning message after submitting password changing form
-  Scenario: Changing password with mistakes
-    When I click on the Change password subsection button on profile page
-    And I change "GMAIL_MAIL_USER" password to "GMAIL_MAIL_USER_NEW_PASSWORD" password with mistakes
-    Then warning message about not valid password repeating is visible
-
-  # As a user
-  # I want to change my password
-  # So that I submit password changing form with new password and then try to login with this password
-  Scenario: Changing password without mistakes
-    When I click on the Change password subsection button on profile page
-    And I change "GMAIL_MAIL_USER" password to "GMAIL_MAIL_USER_NEW_PASSWORD" password
-    Then message about successful password changing is visible on password changing form
-    And click logout button
-    And logout button doesn't exist
-    And I open login form
-    And I login as a user "GMAIL_MAIL_USER_NEW_PASSWORD"
-    And I open profile page
-    And I click on the Change password subsection button on profile page
-    And I change "GMAIL_MAIL_USER_NEW_PASSWORD" password to "GMAIL_MAIL_USER" password
-    Then message about successful password changing is visible on password changing form
-    And click logout button
-    And logout button doesn't exist
-    And I open login form
-    Then I login as a user "GMAIL_MAIL_USER"
-
-  # As a user
   # I want to change my email and login with it
   # So that I change my email in profile edit section and login with new email
   Scenario: Can't login with old email after changing it
@@ -172,7 +144,8 @@ Feature: Evening Standard profile editing positive tests
   # So that i leave a comment in custom news comments section then i open profile page, go to Comments section and find it
   Scenario: Seeing the comment user has left
     When I leave a comment in custom news comments form
+    And I verify that my comment is visible on news page
     And I open profile page
     And I click on the Comments subsection button on profile page
-    Then I verify my comment exists in the Comments subsection button on profile page
+    Then I verify my comment exists in the Comments subsection on profile page
     

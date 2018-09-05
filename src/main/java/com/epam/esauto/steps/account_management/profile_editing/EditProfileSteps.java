@@ -2,7 +2,6 @@ package com.epam.esauto.steps.account_management.profile_editing;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import com.epam.esauto.entity.User;
 import com.epam.esauto.steps.MainPageSteps;
 import com.epam.esauto.steps.account_management.login.LoginSteps;
 import cucumber.api.java.en.And;
@@ -13,8 +12,6 @@ import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.stream.Stream;
-
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.epam.esauto.entity.UserProvider.getUser;
@@ -24,8 +21,12 @@ public class EditProfileSteps {
     private static final String BTN_GREEN_COLOR = "rgba(30, 130, 76, 1)";
     private static final String BTN_RED_COLOR = "rgba(220, 6, 43, 1)";
     private static final String NEW_FIRST_NAME = "Robert";
-    private static final String COMMENT = "Good article";
+    private static final String COMMENT = "Great article";
     private static final String SUCCESSFUL_SAVING_MESSAGE = "Changes have been saved.";
+    private static final String PASSWORD_ADDITION = "blabla";
+
+    private static final int MAIN_WINDOW_INDEX = 0;
+    private static final long SAVING_PASSWORD_TIMEOUT = 6000;
 
     @Autowired
     private LoginSteps loginSteps;
@@ -141,13 +142,19 @@ public class EditProfileSteps {
     @Value("${accountPage.comments.commentLeftByUser.xpath}")
     private String leftCommentXpath;
 
+    @Value("${accountPage.comments.sortCommentsButton.id}")
+    private String sortCommentsButtonId;
+
+    @Value("${accountPage.comments.commentText.className}")
+    private String commentTextClassName;
+
     @And("^I open profile page$")
     public void iOpenProfilePage() {
         if (!$(By.xpath(userAccountBtnXpath)).isDisplayed()) {
             $(By.xpath(userBtnXpath)).click();
         }
         $(By.xpath(userAccountBtnXpath)).shouldBe(Condition.visible).click();
-        String expectedUrl = mainPageUrl + "account";
+        var expectedUrl = mainPageUrl + "account";
         Assert.assertEquals("You didn't open account page!", expectedUrl, getWebDriver().getCurrentUrl());
     }
 
@@ -163,21 +170,21 @@ public class EditProfileSteps {
 
     @And("^I click on all subscription buttons on Newsletters form$")
     public void iClickOnAllSubscriptionButtons() {
-        Stream<SelenideElement> stream = $$(By.className(subLabelClassName)).stream();
+        var stream = $$(By.className(subLabelClassName)).stream();
         stream.forEach(SelenideElement::click);
     }
 
     @Then("^I see that all subscription buttons on Newsletters form have changed color to green$")
     public void iSeeThatAllSubscriptionButtonsHaveChangedColorToGreen() {
         refresh();
-        Stream<SelenideElement> stream = $$(By.className(subBtnClassName)).stream();
+        var stream = $$(By.className(subBtnClassName)).stream();
         stream.forEach(btn -> btn.shouldHave(Condition.cssValue("background-color", BTN_GREEN_COLOR)));
     }
 
     @Then("^I see that all subscription buttons on Newsletters form have changed color to red$")
     public void iSeeThatAllSubscriptionButtonsOnNewslettersFormHaveChangedColorToRed() {
         refresh();
-        Stream<SelenideElement> stream = $$(By.className(subBtnClassName)).stream();
+        var stream = $$(By.className(subBtnClassName)).stream();
         stream.forEach(btn -> btn.shouldHave(Condition.cssValue("background-color", BTN_RED_COLOR)));
     }
 
@@ -349,24 +356,24 @@ public class EditProfileSteps {
 
     @And("^I change \"([^\"]*)\" password to \"([^\"]*)\" password$")
     public void iChangePasswordToPassword(String userWithOldPass, String userWithNewPass) {
-        User oldUser = getUser(userWithOldPass);
+        var oldUser = getUser(userWithOldPass);
         $(By.name(passwordInputName)).setValue(oldUser.getEsPassword());
-        User newUser = getUser(userWithNewPass);
+        var newUser = getUser(userWithNewPass);
         $(By.name(newPasswordInputName)).setValue(newUser.getEsPassword());
         $(By.name(repeatPasswordInputName)).setValue(newUser.getEsPassword());
         $(By.xpath(passwordFormXpath + passwordSubmitBtnXpath))
-                .waitUntil(Condition.text("Save changes"), 6000).click();
+                .waitUntil(Condition.text("Save changes"), SAVING_PASSWORD_TIMEOUT).click();
     }
 
     @And("^I change \"([^\"]*)\" password to \"([^\"]*)\" password with mistakes$")
     public void iChangePasswordToPasswordWithMistakes(String userWithOldPass, String userWithNewPass) {
-        User oldUser = getUser(userWithOldPass);
+        var oldUser = getUser(userWithOldPass);
         $(By.name(passwordInputName)).setValue(oldUser.getEsPassword());
-        User newUser = getUser(userWithNewPass);
+        var newUser = getUser(userWithNewPass);
         $(By.name(newPasswordInputName)).setValue(newUser.getEsPassword());
-        $(By.name(repeatPasswordInputName)).setValue(newUser.getEsPassword() + "blabla");
+        $(By.name(repeatPasswordInputName)).setValue(newUser.getEsPassword() + PASSWORD_ADDITION);
         $(By.xpath(passwordFormXpath + passwordSubmitBtnXpath))
-                .waitUntil(Condition.text("Save changes"), 6000).click();
+                .waitUntil(Condition.text("Save changes"), SAVING_PASSWORD_TIMEOUT).click();
     }
 
     @And("^I submit edit form with \"([^\"]*)\" email$")
@@ -378,13 +385,16 @@ public class EditProfileSteps {
 
     @And("^I check if i logged in as user \"([^\"]*)\"$")
     public void iCheckIfILoggedInAsUser(String userName) {
-        switchTo().window(0);
+        switchTo().window(MAIN_WINDOW_INDEX);
         refresh();
         $(By.xpath(userBtnXpath)).click();
         if (!$(By.xpath(logoutBtnXpath)).isDisplayed()) {
-            mainPageSteps.clickLoginButton();
-            loginSteps.iLoginAsAUser(userName);
+            openLoginFormLoginAsUserAndClickUserIcon(userName);
+        }
+        if (!getLoggedUserMail().equals(getUser(userName).getEsLogin())) {
+            mainPageSteps.clickLogoutButton();
             $(By.xpath(userBtnXpath)).click();
+            openLoginFormLoginAsUserAndClickUserIcon(userName);
         }
     }
 
@@ -397,12 +407,30 @@ public class EditProfileSteps {
         $(By.className(postCommentButtonClassName)).click();
     }
 
-    @Then("^I verify my comment exists in the Comments subsection button on profile page$")
-    public void iVerifyMyCommentExistsInTheCommentsSubsectionButtonOnProfilePage() {
+    @And("^I verify that my comment is visible on news page$")
+    public void iVerifyThatMyCommentIsVisibleOnNewsPage() {
+        $(By.className(commentTextClassName))
+                .shouldBe(Condition.visible)
+                .shouldHave(Condition.text(COMMENT));
+    }
+
+    @Then("^I verify my comment exists in the Comments subsection on profile page$")
+    public void iVerifyMyCommentExistsInTheCommentsSubsectionOnProfilePage() {
+        $(By.id(sortCommentsButtonId)).click();
         $(By.xpath(leftCommentXpath))
                 .shouldBe(Condition.visible)
                 .shouldHave(Condition.text(COMMENT));
     }
 
+    private String getLoggedUserMail() {
+        iOpenProfilePage();
+        iClickOnEditProfileSubsectionButton();
+        return $(By.id(editEmailInputId)).getValue();
+    }
 
+    private void openLoginFormLoginAsUserAndClickUserIcon(String userName) {
+        mainPageSteps.clickLoginButton();
+        loginSteps.iLoginAsAUser(userName);
+        $(By.xpath(userBtnXpath)).click();
+    }
 }
