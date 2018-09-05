@@ -9,6 +9,7 @@ import cucumber.api.java.en.And;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,10 +77,11 @@ public class YandexMailSteps {
     }
 
     private void openResetPasswordLink(Wait<WebDriver> waitOuter, Wait<WebDriver> waitInner) {
-        waitOuter.until(driver -> {
+        WebElement linkElement = waitOuter.until(driver -> {
             refresh();
             return waitInner.until(driver1 -> driver1.findElement(By.xpath(resetPasswordLetterXpath)));
-        }).click();
+        });
+        linkElement.click();
         $(By.xpath(resetPasswordLinkXpath)).click();
     }
 }
