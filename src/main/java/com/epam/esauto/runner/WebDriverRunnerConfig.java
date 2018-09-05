@@ -26,12 +26,12 @@ public class WebDriverRunnerConfig {
     @Value("${grid.hubUrl}")
     private String hubUrl;
 
-    @Value("${grid.launchWithRemoteWebDriver}")
-    private Boolean launchWithRemouteDriver;
+    @Value("${grid.remoteDriverEnabled}")
+    private Boolean remoteDriverEnabled;
 
     @PostConstruct
     public void setUp() throws MalformedURLException {
-        if (launchWithRemouteDriver) {
+        if (remoteDriverEnabled) {
             DesiredCapabilities capabilities = new DesiredCapabilities(browserName, browserVersion, Platform.ANY);
             capabilities.setBrowserName(browserName);
 
