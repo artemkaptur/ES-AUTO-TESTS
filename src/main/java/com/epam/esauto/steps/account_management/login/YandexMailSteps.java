@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,11 +59,12 @@ public class YandexMailSteps {
             $(By.name(yandexPasswordName)).setValue(getUser(userName).getMailPassword());
             $(By.xpath(yandexSubmitLoginXpath)).click();
             goToYandexMailBox();
-            wait.until(driver -> {
+            WebElement element = wait.until(driver -> {
                 refresh();
                 $(By.xpath(resetPasswordLetterXpath)).waitUntil(visible, 3000);
                 return driver.findElement(By.xpath(resetPasswordLetterXpath));
-            }).click();
+            });
+            element.click();
             $(By.xpath(resetPasswordLinkXpath)).click();
         } else {
             goToYandexMailBox();
