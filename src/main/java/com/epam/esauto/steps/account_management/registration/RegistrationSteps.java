@@ -137,6 +137,9 @@ public class RegistrationSteps {
     @Value("${registrationPage.invalidZipCodeMessage.xpath}")
     private String invalidZipCodeMessageXpath;
 
+    @Value("${registrationPage.alreadyUsedEmailMessage.xpath}")
+    private String alreadyUsedEmailMessageXpath;
+
     @When("^I fill email field with ([^\"]*)$")
     public void iFillEmailFieldWithEmail(String email) {
         clearElementAndSetValue(emailInputId, email);
@@ -241,13 +244,19 @@ public class RegistrationSteps {
     @And("^fill registration form mandatory fields with:$")
     public void fillRegistrationFormMandatoryFieldsWith(DataTable data) {
         Map<String, String> mandatoryFieldsData = data.asMap(String.class, String.class);
-        $(By.id(selectCountryId)).selectOption(mandatoryFieldsData.get("country"));
-        $(By.id(selectYearOfBirthId)).selectOption(mandatoryFieldsData.get("birthyear"));
-        $(By.id(selectGenderId)).selectOption(mandatoryFieldsData.get("gender"));
-        $(By.id(nicknameInputId)).setValue(randomAlphabetic(14));
+        $(By.id(selectCountryId)).waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT)
+                .selectOption(mandatoryFieldsData.get("country"));
+        $(By.id(selectYearOfBirthId)).waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT)
+                .selectOption(mandatoryFieldsData.get("birthyear"));
+        $(By.id(selectGenderId)).waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT)
+                .selectOption(mandatoryFieldsData.get("gender"));
+        $(By.id(nicknameInputId)).waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT)
+                .setValue(randomAlphabetic(14));
         getRegistrationPositiveTestUser().setEsPassword(mandatoryFieldsData.get("password"));
-        $(By.id(registrationFormPasswordId)).setValue(mandatoryFieldsData.get("password"));
-        $(By.id(registrationFormPasswordConfirmationId)).setValue(mandatoryFieldsData.get("password"));
+        $(By.id(registrationFormPasswordId)).waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT)
+                .setValue(mandatoryFieldsData.get("password"));
+        $(By.id(registrationFormPasswordConfirmationId)).waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT)
+                .setValue(mandatoryFieldsData.get("password"));
     }
 
     @And("^fill zip code field with ([^\"]*)$")
@@ -375,5 +384,10 @@ public class RegistrationSteps {
     public void messageShouldBeShownUnderZipCodeField(String warningMessage) {
         $(By.className(completeRegistrationTitleClassName)).click();
         $(By.xpath(invalidZipCodeMessageXpath)).shouldHave(text(warningMessage));
+    }
+
+    @Then("^\"([^\"]*)\" message should be shown under email field at registration form$")
+    public void messageShouldBeShownUnderEmailFieldAtRegistrationForm(String warningMessage) {
+        $(By.xpath(alreadyUsedEmailMessageXpath)).shouldHave(text(warningMessage));
     }
 }

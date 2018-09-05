@@ -9,7 +9,7 @@ Feature: Evening standard login positive tests
 #I want to login with correct credentials
 #So that i can use all available functionality of application
   Scenario: I can login with correct credentials
-    When  I login as a user "YANDEX_MAIL_USER"
+    When  I login as a user "MAILRU_MAIL_USER"
     Then  click logout button
 
 #As a user

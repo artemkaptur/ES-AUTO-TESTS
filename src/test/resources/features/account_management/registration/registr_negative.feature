@@ -9,9 +9,4 @@ Feature: Evening standard registration negative tests
 
   Scenario: user can't register with already used email
     When  I fill registration form with "YANDEX_MAIL_USER" email, "John", "Smith"
-    And   fill registration form mandatory fields with:
-      | country   | Belarus  |
-      | birthyear | 1999     |
-      | gender    | Male     |
-      | password  | test7890 |
-    Then  I verify that complete registration page is opened
+    Then  "Email cannot be used. Try another" message should be shown under email field at registration form

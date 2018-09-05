@@ -6,15 +6,17 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.openqa.selenium.By;
-import cucumber.api.java.en.Given;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 
+import static com.codeborne.selenide.Condition.not;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 @ContextConfiguration(classes = AppConfig.class)
 public class MainPageSteps {
+
+    private static final int TRIPLE_DEFAULT_TIMEOUT = 12000;
 
     @Value("${mainPage.url}")
     private String mainPageUrl;
@@ -52,7 +54,7 @@ public class MainPageSteps {
 
     @Then("^logout button doesn't exist$")
     public void logoutButtonDoesntExist() {
-        clickOnUserBtnAndGetBtnByXpath(logoutBtnXpath).shouldNotBe(visible);
+        clickOnUserBtnAndGetBtnByXpath(logoutBtnXpath).waitUntil(not(visible), TRIPLE_DEFAULT_TIMEOUT);
         $(By.xpath(userBtnXpath)).click();
     }
 
@@ -70,7 +72,7 @@ public class MainPageSteps {
     @Given("^I click register button$")
     public void iClickRegisterButton() {
         $(By.xpath(userBtnXpath)).click();
-        $(By.xpath(registrationBtnXpath)).click();
+        $(By.xpath(registrationBtnXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
     }
 
     public SelenideElement clickOnUserBtnAndGetBtnByXpath(String xpath) {
