@@ -5,6 +5,7 @@ import com.codeborne.selenide.WebDriverRunner;
 import com.epam.esauto.spring.AppConfig;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -52,14 +53,14 @@ public class MobileMainSteps {
 
     @When("^I launch Standard app$")
     public void iLaunchStandardApp() throws MalformedURLException {
-        var capabilities = new DesiredCapabilities();
+        DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(PLATFORM_NAME, androidPlatformName);
         capabilities.setCapability(DEVICE_NAME, deviceName);
         capabilities.setCapability(APP, appUrl);
         capabilities.setCapability(APP_PACKAGE, appPackage);
         capabilities.setCapability(APP_ACTIVITY, appActivity);
 
-        var driver = new AndroidDriver(new URL(hubUrl), capabilities);
+        AppiumDriver driver = new AndroidDriver(new URL(hubUrl), capabilities);
         WebDriverRunner.setWebDriver(driver);
     }
 

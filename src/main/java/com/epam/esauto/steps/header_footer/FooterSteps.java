@@ -43,7 +43,7 @@ public class FooterSteps {
 
     @Then("^page with url \"([^\"]*)\" should be open$")
     public void pageWithShouldBeOpen(String url) {
-        var errorMessage = String.format("Page with url %s has not opened", url);
+        String errorMessage = String.format("Page with url %s has not opened", url);
         Assert.assertEquals(errorMessage, getFullUrl(mainPageUrl, url), url());
     }
 

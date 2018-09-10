@@ -11,8 +11,8 @@ ext {
 }
 
 mainClassName = 'CucumberRunner'
-sourceCompatibility = JavaVersion.VERSION_1_10
-targetCompatibility = JavaVersion.VERSION_1_10
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 dependencies {
     compile 'com.google.guava:guava:23.0'

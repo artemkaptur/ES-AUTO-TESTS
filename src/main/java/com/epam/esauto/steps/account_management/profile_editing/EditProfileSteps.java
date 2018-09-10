@@ -2,6 +2,7 @@ package com.epam.esauto.steps.account_management.profile_editing;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import com.epam.esauto.entity.User;
 import com.epam.esauto.steps.MainPageSteps;
 import com.epam.esauto.steps.account_management.login.LoginSteps;
 import cucumber.api.java.en.And;
@@ -11,6 +12,8 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
+import java.util.stream.Stream;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -154,7 +157,7 @@ public class EditProfileSteps {
             $(By.xpath(userBtnXpath)).click();
         }
         $(By.xpath(userAccountBtnXpath)).shouldBe(Condition.visible).click();
-        var expectedUrl = mainPageUrl + "account";
+        String expectedUrl = mainPageUrl + "account";
         Assert.assertEquals("You didn't open account page!", expectedUrl, getWebDriver().getCurrentUrl());
     }
 
@@ -170,21 +173,21 @@ public class EditProfileSteps {
 
     @And("^I click on all subscription buttons on Newsletters form$")
     public void iClickOnAllSubscriptionButtons() {
-        var stream = $$(By.className(subLabelClassName)).stream();
+        Stream<SelenideElement> stream = $$(By.className(subLabelClassName)).stream();
         stream.forEach(SelenideElement::click);
     }
 
     @Then("^I see that all subscription buttons on Newsletters form have changed color to green$")
     public void iSeeThatAllSubscriptionButtonsHaveChangedColorToGreen() {
         refresh();
-        var stream = $$(By.className(subBtnClassName)).stream();
+        Stream<SelenideElement> stream = $$(By.className(subBtnClassName)).stream();
         stream.forEach(btn -> btn.shouldHave(Condition.cssValue("background-color", BTN_GREEN_COLOR)));
     }
 
     @Then("^I see that all subscription buttons on Newsletters form have changed color to red$")
     public void iSeeThatAllSubscriptionButtonsOnNewslettersFormHaveChangedColorToRed() {
         refresh();
-        var stream = $$(By.className(subBtnClassName)).stream();
+        Stream<SelenideElement> stream = $$(By.className(subBtnClassName)).stream();
         stream.forEach(btn -> btn.shouldHave(Condition.cssValue("background-color", BTN_RED_COLOR)));
     }
 
@@ -275,7 +278,7 @@ public class EditProfileSteps {
 
     @Then("^warning message about empty gender option is visible on edit form$")
     public void warningMessageAboutGenderIsVisible() {
-        var errorMessage = "This information helps us to understand our readers," +
+        String errorMessage = "This information helps us to understand our readers," +
                 " and tailor advertising and content to you.";
         $(By.xpath(genderWarningMsgXpath))
                 .shouldBe(Condition.visible)
@@ -315,13 +318,13 @@ public class EditProfileSteps {
 
     @And("^I enter a not valid first name into first name field input on edit form$")
     public void iEnterANotValidNameIntoFirstNameField() {
-        var notValidFirstName = "1123345678";
+        String notValidFirstName = "1123345678";
         $(By.id(firstNameInputId)).setValue(notValidFirstName);
     }
 
     @And("^I enter a not valid name into last name field input on edit form$")
     public void iEnterANotValidNameIntoLastNameField() {
-        var notValidLastName = "df@@@@@@@###$$$";
+        String notValidLastName = "df@@@@@@@###$$$";
         $(By.id(lastNameInputId)).setValue(notValidLastName);
     }
 
@@ -334,7 +337,7 @@ public class EditProfileSteps {
 
     @Then("^warning message about not valid password repeating is visible$")
     public void warningMessageAboutNotValidPasswordRepeatingIsVisible() {
-        var passwordWarningMessage = "Password does not match";
+        String passwordWarningMessage = "Password does not match";
         $(By.xpath(passwordWarningMessageXpath))
                 .shouldBe(Condition.visible)
                 .shouldHave(Condition.text(passwordWarningMessage));
@@ -356,9 +359,9 @@ public class EditProfileSteps {
 
     @And("^I change \"([^\"]*)\" password to \"([^\"]*)\" password$")
     public void iChangePasswordToPassword(String userWithOldPass, String userWithNewPass) {
-        var oldUser = getUser(userWithOldPass);
+        User oldUser = getUser(userWithOldPass);
         $(By.name(passwordInputName)).setValue(oldUser.getEsPassword());
-        var newUser = getUser(userWithNewPass);
+        User newUser = getUser(userWithNewPass);
         $(By.name(newPasswordInputName)).setValue(newUser.getEsPassword());
         $(By.name(repeatPasswordInputName)).setValue(newUser.getEsPassword());
         $(By.xpath(passwordFormXpath + passwordSubmitBtnXpath))
@@ -367,9 +370,9 @@ public class EditProfileSteps {
 
     @And("^I change \"([^\"]*)\" password to \"([^\"]*)\" password with mistakes$")
     public void iChangePasswordToPasswordWithMistakes(String userWithOldPass, String userWithNewPass) {
-        var oldUser = getUser(userWithOldPass);
+        User oldUser = getUser(userWithOldPass);
         $(By.name(passwordInputName)).setValue(oldUser.getEsPassword());
-        var newUser = getUser(userWithNewPass);
+        User newUser = getUser(userWithNewPass);
         $(By.name(newPasswordInputName)).setValue(newUser.getEsPassword());
         $(By.name(repeatPasswordInputName)).setValue(newUser.getEsPassword() + PASSWORD_ADDITION);
         $(By.xpath(passwordFormXpath + passwordSubmitBtnXpath))
