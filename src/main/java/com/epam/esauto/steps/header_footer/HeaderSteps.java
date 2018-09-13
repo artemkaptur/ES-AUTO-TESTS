@@ -154,13 +154,9 @@ public class HeaderSteps {
         $(By.xpath(mainLogoHPXpath)).click();
     }
 
-<<<<<<< HEAD:src/main/java/com/epam/esauto/steps/header_footer/HeaderSteps.java
+
     @And("^\"([^\"]*)\" item number \"([^\"]*)\" \"([^\"]*)\" contains list of sub-menus and they have valid href$")
     public void mainMenuItemNumberContainsListOfSubMenusAndTheyHaveValidHref(String className, String menuNumber, String menuItem, Map<String, String> subMenus) {
-=======
-    @Then("^main menu item number \"([^\"]*)\" \"([^\"]*)\" contains list of sub-menus and they have valid href$")
-    public void mainMenuItemNumberContainsListOfSubMenusAndTheyHaveValidHref(String menuNumber, String menuItem, Map<String, String> subMenus) {
->>>>>>> Refactoring:src/main/java/com/epam/esauto/steps/HeaderSteps.java
         Map<String, String> subMenuInfo = $(By.xpath(String.format(
                 "//nav[@class='%s']//a[@title='%s']",className, menuItem)))
                 .hover()
