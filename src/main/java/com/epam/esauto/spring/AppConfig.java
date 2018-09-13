@@ -10,7 +10,8 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @ComponentScan(basePackages = "com.epam.esauto")
 @PropertySource({"classpath:editprofile.properties", "classpath:content.properties",
         "classpath:homeprop.properties", "classpath:login.properties", "classpath:registration.properties",
-        "classpath:headerFooter.properties", "classpath:yandex.properties", "classpath:mobile.properties", "classpath:grid.properties"})
+        "classpath:headerFooter.properties", "classpath:yandex.properties",
+        "classpath:mobile.properties", "classpath:grid.properties"})
 public class AppConfig {
 
     @Bean
