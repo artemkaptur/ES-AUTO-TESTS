@@ -3,7 +3,7 @@ Feature: Navigation Feature
 
   Background: I open ES Application
     Given I launch Standard app
-    When I close intro slideshow
+    Given I close intro slideshow
 
   # As a user I want to download any section ("Edition", "Es magazine", "Homes&property") for every day till 14/02/2018
   # So when I open ES Application
@@ -69,6 +69,19 @@ Feature: Navigation Feature
       | Sudoku Elementary | Codeword | Sudoku Advanced | Sudoku Intermediate | Cryptic Crossword | Daily Crossword | Quick Crossword |
 
   # As a user
+  # I want to navigate between main menu sections
+  @pending
+  Scenario: I can navigate between main menu sections
+    When I open section "<section>"
+    Then I see red line under section "<section>"
+      | section          |
+      | EDITIONS         |
+      | LATEST NEWS      |
+      | ES MAGAZINE      |
+      | HOMES & PROPERTY |
+      | DOWNLOADED       |
+
+  # As a user
   # I want to hide and show news sections in "Latest news"
   @pending
   Scenario: I want to show & hide subsections in "Latest news"
@@ -85,7 +98,7 @@ Feature: Navigation Feature
     When I open section "Latest news"
     And choose subsection
       | Football |
-    Then I can swipe right and left to see all availabale articles
+    Then I can swipe right and left to see all available articles
 
   # As a user
   # I want to open every article
@@ -107,3 +120,13 @@ Feature: Navigation Feature
       | EDITIONS         |
       | ES MAGAZINE      |
       | HOMES & PROPERTY |
+
+  # As a user
+  # I want to go to section "Latest news" by clicking "Live" button
+  @pending
+    @lol
+  Scenario: I can go to section "Latest news" by clicking "Live" button
+    Given open Editions section
+    And download edition
+    When I click Live button
+    Then I go to Latest news section
