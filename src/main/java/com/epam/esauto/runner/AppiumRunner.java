@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(format = {"pretty", "json:out/cucumber.json", "html:out/cucumber.html"},
-        features = "src/test/resources/features/mobile_features/", glue = "com/epam/esauto/steps/mobile/",
-        plugin = {"com.epam.reportportal.cucumber.StepReporter", "com.epam.reportportal.cucumber.ScenarioReporter"})
+        features = "src/test/resources/mobile_features/", glue = "com/epam/esauto/steps/mobile/",
+        plugin = {"com.epam.reportportal.cucumber.StepReporter", "com.github.kirlionik.cucumberallure.AllureReporter"})
 public class AppiumRunner {
 }

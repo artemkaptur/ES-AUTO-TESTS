@@ -1,4 +1,4 @@
-package com.epam.esauto.steps;
+package com.epam.esauto.runner;
 
 import com.codeborne.selenide.Screenshots;
 import com.epam.reportportal.message.ReportPortalMessage;
