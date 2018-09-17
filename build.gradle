@@ -76,7 +76,6 @@ testParallel {
     glue = "com/epam/esauto/steps/"
     strict = false
     printTestOutput = true
-    properties = "-Dselenide.browser=chrome"
 }
 
 
