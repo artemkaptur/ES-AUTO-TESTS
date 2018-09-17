@@ -29,7 +29,7 @@ public class GoLondonPageSteps {
     private static final int COORDINATE_X = 0;
     private static final int COUNT_OF_LABEL_WITH_INFORMATION_ABOUT_TICKET = 3;
     private static final int MAIN_PAGE_NUMBER = 0;
-    private static final String CHECK_COLOR_IN_BACKGROUND = "rgb(0, 0, 0)";
+    private static final String CHECK_COLOR_IN_BACKGROUND = "rgba(0, 0, 0, 1)";
     private static final String NO_RESULT_MESSAGE = "Sorry, we couldn't find any results for your search, please select another option and try again";
     private static final String RESULT_MESSAGE = "We found %d results that match your search";
     private static final String BOOK_SOME_TICKETS_TEST_NAME = "I book some tickets";

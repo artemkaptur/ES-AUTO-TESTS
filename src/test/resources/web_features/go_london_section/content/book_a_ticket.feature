@@ -10,7 +10,7 @@ Feature: Evening Standard "GO London" section - Content
 
   #As a user
   #I want to book some tickets on some date in some time and edit tickets number
-  #So I can open article and book a two Lower Tier Left tickets in "Ticket" section on 30 August in 19:30 and edit number tickets by 1 after choose date
+  #So I can open article and book a some tickets on some date and in some time and edit number tickets by 1 after choose date
   Scenario:
     When I open "https://www.eveningstandardtickets.co.uk/london-theatre/musicals/the-book-of-mormon"
     And I book some tickets with edit number tickets by "3" in 'choose date' page
@@ -18,7 +18,7 @@ Feature: Evening Standard "GO London" section - Content
 
   #As a user
   #I want to book some tickets on some date in some time and edit tickets number
-  #So I can open article and book a two Lower Tier Left tickets in "Ticket" section on 30 August in 19:30 and edit number tickets by 1 after choose seats
+  #So I can open article and book a some tickets on some date and in some time and edit number tickets by 1 after choose seats
   Scenario:
     When I open "https://www.eveningstandardtickets.co.uk/london-theatre/musicals/the-book-of-mormon"
     And I book some tickets with edit number tickets by "1" in 'choose seats' page
@@ -26,7 +26,7 @@ Feature: Evening Standard "GO London" section - Content
 
   #As a user
   #I want to book some tickets on some date in some time and edit date
-  #So I can open article and book a two Lower Tier Left tickets in "Ticket" section on 30 August in 19:30 and edit date by 31-Aug-2018 after choose seats
+  #So I can open article and book a some tickets on some date and in some time and edit date after choose seats
   Scenario:
     When I open "https://www.eveningstandardtickets.co.uk/london-theatre/musicals/the-book-of-mormon"
     And I book some tickets with edit date in 'choose seats' page
@@ -34,7 +34,7 @@ Feature: Evening Standard "GO London" section - Content
 
   #As a user
   #I want to book some tickets on some date in some time and edit time
-  #So I can open article and book a two Lower Tier Left tickets in "Ticket" section on 1 September in 19:30 and edit time by 14:30 after choose seats
+  #So I can open article and book a some tickets on some date and in some time and edit time after choose seats
   Scenario:
     When I open "https://www.eveningstandardtickets.co.uk/london-theatre/musicals/the-book-of-mormon"
     And I book some tickets with edit time in 'choose seats' page
