@@ -1,6 +1,6 @@
 package com.epam.esauto.steps;
 
-import com.epam.esauto.util.MySaxParser;
+import com.epam.esauto.util.ApiSaxParser;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -15,7 +15,7 @@ import org.xml.sax.SAXException;
 
 public class APISteps {
 
-	private MySaxParser handler = new MySaxParser();
+	private ApiSaxParser handler = new ApiSaxParser();
 
 	@Given("^I install base url \"([^\"]*)\"$")
 	public void installBaseURL(String url) {
