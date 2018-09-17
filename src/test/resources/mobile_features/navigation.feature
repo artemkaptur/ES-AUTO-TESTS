@@ -5,48 +5,42 @@ Feature: Navigation Feature
     Given I launch Standard app
     Given I close intro slideshow
 
-  # As a user I want to download any section ("Edition", "Es magazine", "Homes&property") for every day till 14/02/2018
-  # So when I open ES Application
-  # Then I see button "Download"
-  @pending
-  Scenario Outline: I can see button "Download" at any section
+  # As a user 
+  # I want to download magazine 
+  # Then I click on any section and see button 'Download'
+  Scenario Outline: I can see button 'Download' at any section
     When I open section "<section>"
-    And choose date "<date>"
     Then button "Download" should be visible
-    Examples:
-      | section          | date       |
-      | EDITIONS         | 16/02/2018 |
-      | ES MAGAZINE      | 23/02/2018 |
-      | HOMES & PROPERTY | 21/02/2018 |
-
-  # As a user I want to download any section ("Edition", "Es magazine", "Homes&property") for every day till 14/02/2018
-  # So when I open ES Application
-  # Then I see button "Download"
-  @pending
-  Scenario Outline: I can download magazine at any section
-    When I open section "<section>"
-    And choose date "<date>"
-    And click button "Download"
-    Then I see label "Downloading"
-    And after downloading under edition in section "<section>" button "Download" changed to "Read"
-    Examples:
-      | section          | date       |
-      | EDITIONS         | 16/02/2018 |
-      | ES MAGAZINE      | 23/02/2018 |
-      | HOMES & PROPERTY | 21/02/2018 |
-
-  # As a user
-  # I can be able to perform left and right swipes to turn the magazines' pages
-  @pending
-  Scenario Outline: I can turn pages by swiping left and right
-    When I open section "<section>"
-    And click button "Read" under downloaded edition
-    Then I can read the edition and turn pages by swiping left and right
     Examples:
       | section          |
       | EDITIONS         |
       | ES MAGAZINE      |
       | HOMES & PROPERTY |
+
+  # As a user
+  # I want to download magazine from any section of application
+  # Then I click on any section, click button 'Download' and see label 'Downloading'
+  # And I click button 'Cancel' then a label 'Downloading' not visible
+  Scenario Outline: I can download magazine at any section
+    When I open section "<section>"
+    And click button "Download"
+    Then I see label "Downloading"
+    And I click button "CANCEL"
+    Then I not see label "Downloading"
+    Examples:
+      | section          |
+      | EDITIONS         |
+      | ES MAGAZINE      |
+      | HOMES & PROPERTY |
+
+  # As a user
+  # I want to read downloaded magazine
+  # Then I download magazine
+  @pending
+  Scenario: I can turn pages by swiping left and right
+    When I open section "<section>"
+    And click button "Read" under downloaded edition
+    Then I can read the edition and turn pages by swiping left and right
 
   # As a user
   # I want to see list of all pages and pick any
@@ -70,16 +64,16 @@ Feature: Navigation Feature
 
   # As a user
   # I want to navigate between main menu sections
-  @pending
-  Scenario: I can navigate between main menu sections
+  Scenario Outline: I can navigate between main menu sections
     When I open section "<section>"
-    Then I see red line under section "<section>"
+    Then I am in this section "<section>"
+
+    Examples:
       | section          |
       | EDITIONS         |
-      | LATEST NEWS      |
       | ES MAGAZINE      |
       | HOMES & PROPERTY |
-      | DOWNLOADED       |
+      | LATEST NEWS      |
 
   # As a user
   # I want to hide and show news sections in "Latest news"
