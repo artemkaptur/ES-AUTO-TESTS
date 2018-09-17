@@ -5,6 +5,7 @@ import com.codeborne.selenide.WebDriverRunner;
 import com.epam.esauto.entity.Order;
 import com.epam.esauto.spring.AppConfig;
 import com.epam.esauto.util.DataHolder;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -22,7 +23,7 @@ import static org.junit.Assert.assertNotEquals;
 @ContextConfiguration(classes = AppConfig.class)
 public class GoLondonPageSteps {
 
-    private static final int TRIPLE_DEFAULT_TIMEOUT = 15000;
+    private static final int TRIPLE_DEFAULT_TIMEOUT = 12000;
     private static final int NEW_DATE_IN_CALENDAR = 2;
     private static final int NUMBER_OF_PIXELS_FOR_SCROLL = 400;
     private static final int COORDINATE_Y = 0;
@@ -257,7 +258,9 @@ public class GoLondonPageSteps {
 
     @When("^I open article by click button$")
     public void iOpenArticleByClickButton() {
-        dataHolder.put(ARGUMENT_NAME, $(By.xpath(goLondonPageArticleHrefXpath)).getWrappedElement().getAttribute("href"));
+        dataHolder.put(ARGUMENT_NAME, $(By.xpath(goLondonPageArticleHrefXpath))
+                .getWrappedElement()
+                .getAttribute("href"));
         $(By.className(goLondonPageLabelForScrolToArticleLabelClassName)).scrollTo();
         $(By.xpath(goLondonPageArticleXpath)).click();
     }
@@ -274,7 +277,8 @@ public class GoLondonPageSteps {
 
     @Then("^background is black$")
     public void backgroundIsBlack() {
-        $(By.xpath(goLondonPageBackgroundXpath)).shouldBe(cssValue("background-color", CHECK_COLOR_IN_BACKGROUND));
+        $(By.xpath(goLondonPageBackgroundXpath))
+                .shouldBe(cssValue("background-color", CHECK_COLOR_IN_BACKGROUND));
     }
 
     @And("^I open \"([^\"]*)\"$")
@@ -284,8 +288,9 @@ public class GoLondonPageSteps {
 
     @When("^I click \"([^\"]*)\" tag$")
     public void iClickTag(String tag) {
-        int x = $(By.xpath(String.format(goLondonArticlePageTagsXpath, tag))).getWrappedElement().getLocation().getY() - NUMBER_OF_PIXELS_FOR_SCROLL;
-        executeJavaScript(String.format("window.scrollTo(%d,%d)", COORDINATE_Y, x));
+        int coordinateX = $(By.xpath(String.format(goLondonArticlePageTagsXpath, tag)))
+                .getWrappedElement().getLocation().getY() - NUMBER_OF_PIXELS_FOR_SCROLL;
+        executeJavaScript(String.format("window.scrollTo(%d,%d)", COORDINATE_Y, coordinateX));
         $(By.xpath(String.format(goLondonArticlePageTagsXpath, tag))).click();
     }
 
@@ -348,7 +353,9 @@ public class GoLondonPageSteps {
     @Then("^positive result search in search properties page is shown$")
     public void positiveResultSearchInSearchPropertiesPageIsShown() {
         $(By.className(goLondonSearchPropertiesPageResultOfSearchLabelClassName)).shouldBe(visible);
-        $(By.className(goLondonSearchPropertiesPageResultOfSearchLabelClassName)).shouldHave(text(String.format(RESULT_MESSAGE, $$(By.className(goLondonSearchPropertiesPageCountOfResultLabelClassName)).size())));
+        $(By.className(goLondonSearchPropertiesPageResultOfSearchLabelClassName))
+                .shouldHave(text(String.format(RESULT_MESSAGE,
+                        $$(By.className(goLondonSearchPropertiesPageCountOfResultLabelClassName)).size())));
     }
 
     @Then("^negative result search in search properties page is shown$")
@@ -364,12 +371,9 @@ public class GoLondonPageSteps {
 
     @Then("^'GO' and 'London' have another color with hover action$")
     public void goAndLondonHaveAnotherColorWithHoverAction() {
-        assertNotEquals($(By.xpath(goLondonPageGoLondonPageLabelGpath)).getCssValue("color"), $(By.xpath(goLondonPageGoLondonPageLabelGpath)).hover().getCssValue("color"));
-    }
-
-    @Then("^\'User menu\' and \'search\' button place on same line$")
-    public void userMenuAndSearchButtonPlaceOnSameLine() {
-        assertEquals($(By.id(goLondonPageSearchPropertiesId)).getWrappedElement().getLocation().getY(), $(By.id(goLondonPageAccountId)).getWrappedElement().getLocation().getY());
+        assertNotEquals($(By.xpath(goLondonPageGoLondonPageLabelGpath))
+                .getCssValue("color"),
+                $(By.xpath(goLondonPageGoLondonPageLabelGpath)).hover().getCssValue("color"));
     }
 
     @When("^I click \'toggle menu\' button$")
@@ -395,7 +399,7 @@ public class GoLondonPageSteps {
 
     @And("^'Proceed to checkout' button is displayed$")
     public void proceedToCheckoutButtonIsDisplayed() {
-        $(By.id(goLondonTicketsPageProceedToCheckoutId)).shouldBe(visible);
+        $(By.id(goLondonTicketsPageProceedToCheckoutId)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT);
     }
 
     @And("^I book some tickets with edit number tickets by \"([^\"]*)\" in 'choose date' page$")
@@ -403,18 +407,26 @@ public class GoLondonPageSteps {
         Order order = new Order();
         order.setName($(By.xpath(goLondonTicketsPageNameOfArticleLabelXpath)).getText());
         $(By.xpath(goLondonTicketsPageFindTicketButtonXpath)).click();
-        order.setTickets($(By.xpath(goLondonTicketsPageNumberOfTicketsLabelXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).getText());
-        $(By.xpath(goLondonTicketsPageEditTicketNumberButtonXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
+        order.setTickets($(By.xpath(goLondonTicketsPageNumberOfTicketsLabelXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).getText());
+        $(By.xpath(goLondonTicketsPageEditTicketNumberButtonXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
         $(By.xpath(goLondonTicketsPageTicketsNumberSelectXpath)).selectOption(changeTickets);
         order.setTickets($(By.xpath(goLondonTicketsPageNumberOfTicketsLabelXpath)).getText());
         $(By.xpath(goLondonTicketsPageChooseDateNextButtonXpath)).click();
         $(By.xpath(goLondonTicketsPageShowTimeButtonXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
         $$(By.xpath(goLondonTicketsPageShowTimeLabelInAllDayInCalendarXpath)).last().click();
         checkingNeedToPressAgain($$(By.xpath(goLondonTicketsPageShowTimeLabelInAllDayInCalendarXpath)).last());
-        order.setDate($(By.xpath(goLondonTicketsPageDataLabelXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).getText());
+        order.setDate($(By.xpath(goLondonTicketsPageDataLabelXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
+                .getText());
         order.setTime($(By.xpath(goLondonTicketsPageTimeLabelTitleXpath)).getText());
-        $(By.xpath(goLondonTicketsPageSeatsCircleXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).doubleClick().click(COORDINATE_X, COORDINATE_Y);
-        order.setSeats($(By.xpath(goLondonTicketsPageSeatsInformationLabelXpath)).getText());
+        $(By.xpath(goLondonTicketsPageSeatsCircleXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
+                .doubleClick().click(COORDINATE_X, COORDINATE_Y);
+        order.setSeats($(By.xpath(goLondonTicketsPageSeatsInformationLabelXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
+                .getText());
         $(By.xpath(goLondonTicketsPageConfirmSeatSelectionButtonXpath)).click();
         dataHolder.put(EDIT_NUMBER_TICKETS_IN_CHOOSE_DATE_PAGE_TEST_NAME, order);
     }
@@ -427,14 +439,20 @@ public class GoLondonPageSteps {
         $(By.xpath(goLondonTicketsPageShowTimeButtonXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
         $$(By.xpath(goLondonTicketsPageShowTimeLabelInAllDayInCalendarXpath)).last().click();
         checkingNeedToPressAgain($$(By.xpath(goLondonTicketsPageShowTimeLabelInAllDayInCalendarXpath)).last());
-        order.setDate($(By.xpath(goLondonTicketsPageDataLabelXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).getText());
+        order.setDate($(By.xpath(goLondonTicketsPageDataLabelXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
+                .getText());
         order.setTime($(By.xpath(goLondonTicketsPageTimeLabelTitleXpath)).getText());
         $(By.xpath(goLondonTicketsPageSeatsCircleXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT);
         $(By.xpath(goLondonTicketsPageEditTicketNumberButtonXpath)).click();
         $(By.xpath(goLondonTicketsPageTicketsNumberSelectXpath)).selectOption(changeTickets);
-        order.setTickets($(By.xpath(goLondonTicketsPageNumberOfTicketsLabelXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).getText());
+        order.setTickets($(By.xpath(goLondonTicketsPageNumberOfTicketsLabelXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
+                .getText());
         $(By.xpath(goLondonTicketsPageChooseDateNextButtonXpath)).click();
-        $(By.xpath(goLondonTicketsPageSeatsCircleXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).doubleClick().click(COORDINATE_X, COORDINATE_Y);
+        $(By.xpath(goLondonTicketsPageSeatsCircleXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
+                .doubleClick().click(COORDINATE_X, COORDINATE_Y);
         order.setSeats($(By.xpath(goLondonTicketsPageSeatsInformationLabelXpath)).getText());
         $(By.xpath(goLondonTicketsPageConfirmSeatSelectionButtonXpath)).click();
         dataHolder.put(EDIT_NUMBER_TICKETS_IN_CHOOSE_SEATS_PAGE_TEST_NAME, order);
@@ -445,7 +463,9 @@ public class GoLondonPageSteps {
         Order order = new Order();
         order.setName($(By.xpath(goLondonTicketsPageNameOfArticleLabelXpath)).getText());
         $(By.xpath(goLondonTicketsPageFindTicketButtonXpath)).click();
-        order.setTickets($(By.xpath(goLondonTicketsPageNumberOfTicketsLabelXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).getText());
+        order.setTickets($(By.xpath(goLondonTicketsPageNumberOfTicketsLabelXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
+                .getText());
         $(By.xpath(goLondonTicketsPageShowTimeButtonXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
         $(By.xpath(goLondonTicketsPageShowTimeLabelInAllDayInCalendarXpath)).click();
         checkingNeedToPressAgain($(By.xpath(goLondonTicketsPageShowTimeLabelInAllDayInCalendarXpath)));
@@ -454,11 +474,17 @@ public class GoLondonPageSteps {
         $(By.xpath(goLondonTicketsPageEditTicketDateLabelToScrollXpath)).scrollTo();
         $(By.xpath(goLondonTicketsPageShowTimeButtonXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
         $$(By.xpath(goLondonTicketsPageShowTimeLabelInAllDayInCalendarXpath)).get(NEW_DATE_IN_CALENDAR).click();
-        checkingNeedToPressAgain($$(By.xpath(goLondonTicketsPageShowTimeLabelInAllDayInCalendarXpath)).get(NEW_DATE_IN_CALENDAR));
-        order.setDate($(By.xpath(goLondonTicketsPageDataLabelXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).getText());
+        checkingNeedToPressAgain($$(By.xpath(goLondonTicketsPageShowTimeLabelInAllDayInCalendarXpath))
+                .get(NEW_DATE_IN_CALENDAR));
+        order.setDate($(By.xpath(goLondonTicketsPageDataLabelXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
+                .getText());
         order.setTime($(By.xpath(goLondonTicketsPageTimeLabelTitleXpath)).getText());
-        $(By.xpath(goLondonTicketsPageSeatsCircleXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).doubleClick().click(COORDINATE_X, COORDINATE_Y);
-        order.setSeats($(By.xpath(goLondonTicketsPageSeatsInformationLabelXpath)).getText());
+        $(By.xpath(goLondonTicketsPageSeatsCircleXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
+                .doubleClick().click(COORDINATE_X, COORDINATE_Y);
+        order.setSeats($(By.xpath(goLondonTicketsPageSeatsInformationLabelXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
+                .getText());
         $(By.xpath(goLondonTicketsPageConfirmSeatSelectionButtonXpath)).click();
         dataHolder.put(EDIT_DATE_IN_CHOOSE_SEATS_PAGE_TEST_NAME, order);
     }
@@ -468,27 +494,35 @@ public class GoLondonPageSteps {
         Order order = new Order();
         order.setName($(By.xpath(goLondonTicketsPageNameOfArticleLabelXpath)).getText());
         $(By.xpath(goLondonTicketsPageFindTicketButtonXpath)).click();
-        order.setTickets($(By.xpath(goLondonTicketsPageNumberOfTicketsLabelXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).getText());
+        order.setTickets($(By.xpath(goLondonTicketsPageNumberOfTicketsLabelXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).getText());
         $(By.xpath(goLondonTicketsPageShowTimeButtonXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
         $$(By.xpath(goLondonTicketsPageShowTwoTimeLabelInAllDayInCalendarXpath)).last().click();
         $(By.xpath(goLondonTicketsPageChooseFirstTimeLabelInCalendarXpath)).click();
         $(By.id(goLondonTicketsPageChooseYouTicketsButtonId)).click();
         checkingNeedToPressAgainWhenEditTime($(By.xpath(goLondonTicketsPageChooseFirstTimeLabelInCalendarXpath)));
         $(By.xpath(goLondonTicketsPageSeatsCircleXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT);
-        $(By.xpath(goLondonTicketsPageEditTicketTimeButtonInChooseSeatsXpath)).waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT).click();
-        $(By.xpath(goLondonTicketsPageChooseSecondTimeLabelInCalendarXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
+        $(By.xpath(goLondonTicketsPageEditTicketTimeButtonInChooseSeatsXpath))
+                .waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT).click();
+        $(By.xpath(goLondonTicketsPageChooseSecondTimeLabelInCalendarXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
         $(By.id(goLondonTicketsPageChooseYouTicketsButtonId)).click();
         checkingNeedToPressAgainWhenEditTime($(By.xpath(goLondonTicketsPageChooseSecondTimeLabelInCalendarXpath)));
-        order.setDate($(By.xpath(goLondonTicketsPageDataLabelXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).getText());
+        order.setDate($(By.xpath(goLondonTicketsPageDataLabelXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
+                .getText());
         order.setTime($(By.xpath(goLondonTicketsPageTimeLabelTitleXpath)).getText());
-        $(By.xpath(goLondonTicketsPageSeatsCircleXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).doubleClick().click(COORDINATE_X, COORDINATE_Y);
+        $(By.xpath(goLondonTicketsPageSeatsCircleXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
+                .doubleClick().click(COORDINATE_X, COORDINATE_Y);
         order.setSeats($(By.xpath(goLondonTicketsPageSeatsInformationLabelXpath)).getText());
         $(By.xpath(goLondonTicketsPageConfirmSeatSelectionButtonXpath)).click();
         dataHolder.put(EDIT_TIME_IN_CHOOSE_SEATS_PAGE_TEST_NAME, order);
     }
 
     private void checkingNeedToPressAgainWhenEditTime(SelenideElement selenideElement) {
-        $(By.xpath(goLondonTicketsPageCheckingNeedToPressAgainLabelToWaitXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT);
+        $(By.xpath(goLondonTicketsPageCheckingNeedToPressAgainLabelToWaitXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT);
         if ($$(By.xpath(goLondonTicketsPageInformationLabelAboutOrderXpath)).size() < COUNT_OF_LABEL_WITH_INFORMATION_ABOUT_TICKET) {
             selenideElement.scrollTo().click();
             $(By.id(goLondonTicketsPageChooseYouTicketsButtonId)).click();
@@ -496,7 +530,8 @@ public class GoLondonPageSteps {
     }
 
     private void checkingNeedToPressAgain(SelenideElement selenideElement) {
-        $(By.xpath(goLondonTicketsPageCheckingNeedToPressAgainLabelToWaitXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT);
+        $(By.xpath(goLondonTicketsPageCheckingNeedToPressAgainLabelToWaitXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT);
         if ($$(By.xpath(goLondonTicketsPageInformationLabelAboutOrderXpath)).size() < COUNT_OF_LABEL_WITH_INFORMATION_ABOUT_TICKET)
             selenideElement.click();
     }
@@ -508,7 +543,7 @@ public class GoLondonPageSteps {
 
     @And("^click 'Show time' button$")
     public void clickShowTimeButton() {
-        $(By.xpath(goLondonTicketsPageShowTimeButtonXpath)).waitUntil(visible,TRIPLE_DEFAULT_TIMEOUT).click();
+        $(By.xpath(goLondonTicketsPageShowTimeButtonXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
     }
 
     @Then("^time information in calendar$")
@@ -530,7 +565,8 @@ public class GoLondonPageSteps {
     @Then("^page with Instagram to connect is opened$")
     public void pageWithInstagramToConnectIsOpenedAndTitle() {
         switchTo().window("Evening Standard GO London (@esgolondon) • Instagram photos and videos");
-        $(By.xpath(goLondonTicketsPageCheckInstagramLabelXpath)).waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT).shouldBe(visible);
+        $(By.xpath(goLondonTicketsPageCheckInstagramLabelXpath))
+                .waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT).shouldBe(visible);
         close();
         switchTo().window(MAIN_PAGE_NUMBER);
     }
@@ -543,7 +579,8 @@ public class GoLondonPageSteps {
     @Then("^page with Twitter to connect is opened$")
     public void pageWithTwitterToConnectIsOpened() {
         switchTo().window("Evening Standard GO London (@ESGoLondon) | Twitter");
-        $(By.xpath(goLondonTicketsPageCheckTwitterLabelXpath)).waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT).shouldBe(visible);
+        $(By.xpath(goLondonTicketsPageCheckTwitterLabelXpath))
+                .waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT).shouldBe(visible);
         close();
         switchTo().window(MAIN_PAGE_NUMBER);
     }
@@ -551,7 +588,9 @@ public class GoLondonPageSteps {
     @Then("^page with Facebook to connect is opened$")
     public void pageWithFacebookToConnectIsOpened() {
         switchTo().window("Evening Standard - GO London - Home | Facebook");
-        $(By.xpath(goLondonTicketsPageCheckFacebookLabelXpath)).waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT).shouldBe(visible);
+        $(By.xpath(goLondonTicketsPageCheckFacebookLabelXpath))
+                .waitUntil(enabled, TRIPLE_DEFAULT_TIMEOUT)
+                .shouldBe(visible);
         close();
         switchTo().window(MAIN_PAGE_NUMBER);
     }
@@ -561,13 +600,18 @@ public class GoLondonPageSteps {
         Order order = new Order();
         order.setName($(By.xpath(goLondonTicketsPageNameOfArticleLabelXpath)).getText());
         $(By.xpath(goLondonTicketsPageFindTicketButtonXpath)).click();
-        order.setTickets($(By.xpath(goLondonTicketsPageNumberOfTicketsLabelXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).getText());
+        order.setTickets($(By.xpath(goLondonTicketsPageNumberOfTicketsLabelXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
+                .getText());
         $(By.xpath(goLondonTicketsPageShowTimeButtonXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).click();
         $$(By.xpath(goLondonTicketsPageShowTimeLabelInAllDayInCalendarXpath)).last().click();
         checkingNeedToPressAgain($$(By.xpath(goLondonTicketsPageShowTimeLabelInAllDayInCalendarXpath)).last());
-        order.setDate($(By.xpath(goLondonTicketsPageDataLabelXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).getText());
+        order.setDate($(By.xpath(goLondonTicketsPageDataLabelXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).getText());
         order.setTime($(By.xpath(goLondonTicketsPageTimeLabelTitleXpath)).getText());
-        $(By.xpath(goLondonTicketsPageSeatsCircleXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).doubleClick().click(COORDINATE_X, COORDINATE_Y);
+        $(By.xpath(goLondonTicketsPageSeatsCircleXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
+                .doubleClick().click(COORDINATE_X, COORDINATE_Y);
         order.setSeats($(By.xpath(goLondonTicketsPageSeatsInformationLabelXpath)).getText());
         $(By.xpath(goLondonTicketsPageConfirmSeatSelectionButtonXpath)).click();
         dataHolder.put(BOOK_SOME_TICKETS_TEST_NAME, order);
@@ -575,16 +619,27 @@ public class GoLondonPageSteps {
 
     @Then("^\"([^\"]*)\" for book a tickets is right$")
     public void informationForBookATicketsIsRight(String testName) {
-        Order ckeckOrder = new Order();
-        ckeckOrder.setName($(By.xpath(goLondonTicketsPageCheckNameOfArticleLabelXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).getText());
-        ckeckOrder.setTickets($(By.xpath(goLondonTicketsPageTicketsNumberCheckLabelXpath)).getText());
-        ckeckOrder.setDate($(By.xpath(goLondonTicketsPageDateCheckLabelXpath)).getText());
-        ckeckOrder.setTime($(By.xpath(goLondonTicketsPageTimeCheckLabelXpath)).getText());
-        ckeckOrder.setSeats($(By.xpath(goLondonTicketsPageSeatsCheckLabelXpath)).getText());
+        Order checkOrder = new Order();
+        checkOrder.setName($(By.xpath(goLondonTicketsPageCheckNameOfArticleLabelXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
+                .getText());
+        checkOrder.setTickets($(By.xpath(goLondonTicketsPageTicketsNumberCheckLabelXpath)).getText());
+        checkOrder.setDate($(By.xpath(goLondonTicketsPageDateCheckLabelXpath)).getText());
+        checkOrder.setTime($(By.xpath(goLondonTicketsPageTimeCheckLabelXpath)).getText());
+        checkOrder.setSeats($(By.xpath(goLondonTicketsPageSeatsCheckLabelXpath)).getText());
         $(By.xpath(goLondonTicketsPageDeleteTicketButtonXpath)).click();
         $(By.xpath(goLondonTicketspageConfirmDeleteTicketButtonXpath)).click();
-        $(By.xpath(goLondonTicketsPageCheckDeletedTicketLabelXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT).shouldBe(visible);
+        $(By.xpath(goLondonTicketsPageCheckDeletedTicketLabelXpath))
+                .waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT);
         close();
-        assertEquals(ckeckOrder,dataHolder.getByKey(testName));
+        assertEquals(checkOrder, dataHolder.getByKey(testName));
+    }
+
+    @Then("^'user menu' and 'search' button place on same line$")
+    public void userMenuAndSearchButtonPlaceOnSameLine() {
+        assertEquals($(By.id(goLondonPageSearchPropertiesId))
+                        .getWrappedElement().getLocation().getY(),
+                $(By.id(goLondonPageAccountId)).getWrappedElement().getLocation().getY());
+
     }
 }

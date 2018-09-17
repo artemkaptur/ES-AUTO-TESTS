@@ -56,12 +56,12 @@ public class MainPageSteps {
     private String urlOfChoosenNews;
 
     @When("^I click on \"([^\"]*)\" on Main Page$")
-    public void iClickOnSectionLink(String link) throws Throwable {
+    public void iClickOnSectionLink(String link) {
         $$(By.xpath(sectionLinks)).find(Condition.exactText(link)).click();
     }
 
     @Then("I navigate to \"([^\"]*)\" section$")
-    public void iNavigateToSection(String nameOfTitle) throws Throwable {
+    public void iNavigateToSection(String nameOfTitle) {
         $(By.xpath(pageTitle)).shouldHave(Condition.attribute(ATTRIBUTE_CONTENT, nameOfTitle));
     }
 

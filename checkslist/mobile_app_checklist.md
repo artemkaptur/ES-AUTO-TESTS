@@ -18,15 +18,13 @@
 
 2. Functionality
     2.1 When user turn around device, application will display correctly (s - 3)
-    2.2 User is able to increase image by streaching two fingers (s - 2)
-    2.3 User is able to accept the phone calls during using app (s - 3)
-    2.4 User is able to get messages during using app (s - 3)
-    2.5 When user downloads something, it appears at "Downloaded" section (s - 1)
-    2.6 User is able to go to "Thumbnails" mode and then go back (s - 1)
-    2.7 When user at "Thumbnails" mode makes right swipe page's count increases, and decreases by left swipe (s - 1)
-    2.8 User is able to make bookmark of favorite pages, and then they appear at "Bookmarks" (s - 2)
-    2.9 User is able to use searching, and it works correctly
-    2.10 User is able to share favorite page in his/her social networks
+    2.2 User is able to increase image by stretching two fingers (s - 2)
+    2.4 When user downloads something, it appears at "Downloaded" section (s - 1)
+    2.5 User is able to go to "Thumbnails" mode and then go back (s - 1)
+    2.6 When user at "Thumbnails" mode makes right swipe page's count increases, and decreases by left swipe (s - 1)
+    2.7 User is able to make bookmark of favorite pages, and then they appear at "Bookmarks" (s - 2)
+    2.8 User is able to use searching, and it works correctly
+    2.9 User is able to share favorite page in his/her social networks
 
 
 3. Cross-platform compatibility

@@ -396,7 +396,6 @@ public class EditProfileSteps {
         }
         if (!getLoggedUserMail().equals(getUser(userName).getEsLogin())) {
             mainPageSteps.clickLogoutButton();
-            $(By.xpath(userBtnXpath)).click();
             openLoginFormLoginAsUserAndClickUserIcon(userName);
         }
     }
