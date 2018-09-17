@@ -1,9 +1,22 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.com.gitlab.et.paralleltests:gradle-parallel-cucumber-tests:0.3.1"
+    }
+}
+
 plugins {
     id 'java'
     id 'application'
     id 'idea'
     id 'eclipse'
 }
+
+apply plugin: "com.gitlab.et.paralleltests"
 
 ext {
     cucumberVersion = '1.2.5'
@@ -52,6 +65,20 @@ sourceSets {
        }
    }
 }
+
+gradle.startParameter.continueOnFailure = true
+test.outputs.upToDateWhen { false }
+
+testParallel {
+    parallelExecutions = 5
+    printConfiguration = true
+    cucumberCliClass = 'cucumber.api.cli.Main'
+    glue = "com/epam/esauto/steps/"
+    strict = false
+    printTestOutput = true
+    properties = "-Dselenide.browser=chrome"
+}
+
 
 repositories {
     jcenter()
