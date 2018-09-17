@@ -161,7 +161,8 @@ public class HeaderSteps {
                 .hover()
                 .$$(By.xpath(String.format("//nav[@class='%s']/ul/li[%s]/ul/li/div/a",className, menuNumber)))
                 .stream()
-                .map(el -> Pair.of(el.getAttribute(ATTRIBUTE_TITLE), el.getAttribute(ATTRIBUTE_HREF).replace(mainPageUrl, "")))
+                .map(el -> Pair.of(el.getAttribute(ATTRIBUTE_TITLE), el.getAttribute(ATTRIBUTE_HREF)
+                        .replace(mainPageUrl, "")))
                 .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
         assertEquals(StepUtils.sortMap(subMenus), StepUtils.sortMap(subMenuInfo));
     }

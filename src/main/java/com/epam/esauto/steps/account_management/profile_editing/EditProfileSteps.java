@@ -392,16 +392,10 @@ public class EditProfileSteps {
         refresh();
         $(By.xpath(userBtnXpath)).click();
         if (!$(By.xpath(logoutBtnXpath)).isDisplayed()) {
-<<<<<<< HEAD:src/main/java/com/epam/esauto/steps/account_management/profile_editing/EditProfileSteps.java
             openLoginFormLoginAsUserAndClickUserIcon(userName);
         }
         if (!getLoggedUserMail().equals(getUser(userName).getEsLogin())) {
             mainPageSteps.clickLogoutButton();
-=======
-            mainPageSteps.clickLoginButton();
-            loginSteps.iLoginAsAUser(userName);
->>>>>>> Refactoring:src/main/java/com/epam/esauto/steps/EditProfileSteps.java
-            $(By.xpath(userBtnXpath)).click();
             openLoginFormLoginAsUserAndClickUserIcon(userName);
         }
     }
