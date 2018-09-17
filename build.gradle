@@ -1,22 +1,9 @@
-buildscript {
-    repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-    dependencies {
-        classpath "gradle.plugin.com.gitlab.et.paralleltests:gradle-parallel-cucumber-tests:0.3.1"
-    }
-}
-
 plugins {
     id 'java'
     id 'application'
     id 'idea'
     id 'eclipse'
 }
-
-apply plugin: "com.gitlab.et.paralleltests"
 
 ext {
     cucumberVersion = '1.2.5'
@@ -50,32 +37,20 @@ dependencies {
     testCompile(group: 'ru.yandex.qatools.allure', name: 'allure-commons', version: '1.5.4')
     compile(group: 'ru.yandex.qatools.allure', name: 'allure-java-aspects', version: '1.5.4')
     compile(group: 'com.github.kirlionik', name: 'allure-cucumber-plugin', version: '1.0.2')
-    compile(group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0')
-    compile(group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.0')
-    compile(group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0')
-    compile(group: 'javax.activation', name: 'activation', version: '1.1.1')
+    compile (group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0')
+    compile (group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.0')
+    compile (group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0')
+    compile (group: 'javax.activation', name: 'activation', version: '1.1.1')
+    compile(group: 'io.rest-assured', name: 'rest-assured', version: '3.0.3')
 }
 
 sourceSets {
     test {
         java {
-            srcDir 'src'
-            srcDir 'test'
-        }
-    }
-}
-
-gradle.startParameter.continueOnFailure = true
-test.outputs.upToDateWhen { false }
-
-testParallel {
-    parallelExecutions = 5
-    printConfiguration = true
-    cucumberCliClass = 'cucumber.api.cli.Main'
-    glue = "com/epam/esauto/steps/"
-    strict = false
-    printTestOutput = true
-    properties = "-Dselenide.browser=chrome"
+           srcDir 'src'
+           srcDir 'test'
+       }
+   }
 }
 
 repositories {

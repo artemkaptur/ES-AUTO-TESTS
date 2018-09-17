@@ -154,7 +154,6 @@ public class HeaderSteps {
         $(By.xpath(mainLogoHPXpath)).click();
     }
 
-
     @And("^\"([^\"]*)\" item number \"([^\"]*)\" \"([^\"]*)\" contains list of sub-menus and they have valid href$")
     public void mainMenuItemNumberContainsListOfSubMenusAndTheyHaveValidHref(String className, String menuNumber, String menuItem, Map<String, String> subMenus) {
         Map<String, String> subMenuInfo = $(By.xpath(String.format(
