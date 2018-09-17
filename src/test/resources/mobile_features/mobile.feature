@@ -5,7 +5,6 @@ Feature: Start mobile app
   Scenario: Opening ES application
     Given I install Standard app on mobile device
     And I launch Standard app
-    When I close intro slideshow
     Then I see all news subsections on app screen
 
   # As a user

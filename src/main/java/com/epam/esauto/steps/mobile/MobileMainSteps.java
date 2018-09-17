@@ -104,7 +104,9 @@ public class MobileMainSteps {
         ((AndroidDriver) WebDriverRunner.getWebDriver()).pressKey(new KeyEvent(AndroidKey.ENTER));
         $(By.xpath(playMarketESAppXpath)).click();
         $(By.xpath(playMarketInstallButtonXpath)).waitUntil(Condition.visible, MOBILE_LOAD_ACTIVITY_WAIT).click();
-        $(By.xpath(playMarketOpenButtonXpath)).waitUntil(Condition.visible, INSTALL_WAIT);
+        $(By.xpath(playMarketOpenButtonXpath)).waitUntil(Condition.visible, INSTALL_WAIT).click();
+        $(By.id(closeSlideshowButtonId)).waitUntil(Condition.visible, MOBILE_LOAD_ACTIVITY_WAIT).click();
+        $(By.id(londonSubsectionsScrollViewId)).shouldBe(Condition.visible);
         driver.closeApp();
     }
 
@@ -119,14 +121,8 @@ public class MobileMainSteps {
         $(By.xpath(playMarketOpenButtonXpath)).shouldBe(Condition.visible).click();
     }
 
-    @When("^I close intro slideshow$")
-    public void iCloseIntroSlideshow() {
-        $(By.id(closeSlideshowButtonId)).click();
-    }
-
     @Then("^I see all news subsections on app screen$")
     public void iSeeAllNewsSubsectionsOnAppScreen() {
         $(By.id(londonSubsectionsScrollViewId)).shouldBe(Condition.visible);
     }
-
 }
