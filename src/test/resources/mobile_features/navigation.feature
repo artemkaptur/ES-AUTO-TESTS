@@ -63,6 +63,19 @@ Feature: Navigation Feature
       | Sudoku Elementary | Codeword | Sudoku Advanced | Sudoku Intermediate | Cryptic Crossword | Daily Crossword | Quick Crossword |
 
   # As a user
+  # I want to navigate between main menu sections
+  Scenario Outline: I can navigate between main menu sections
+    When I open section "<section>"
+    Then I am in this section "<section>"
+
+    Examples:
+      | section          |
+      | EDITIONS         |
+      | ES MAGAZINE      |
+      | HOMES & PROPERTY |
+      | LATEST NEWS      |
+
+  # As a user
   # I want to hide and show news sections in "Latest news"
   @pending
   Scenario: I want to show & hide subsections in "Latest news"

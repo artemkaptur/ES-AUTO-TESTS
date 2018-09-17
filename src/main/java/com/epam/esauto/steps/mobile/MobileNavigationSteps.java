@@ -50,4 +50,4 @@ public class MobileNavigationSteps {
 		$(By.id(documentActionButton)).shouldNotHave(Condition.text(nameOfButton));
 	}
 
-}
+}
