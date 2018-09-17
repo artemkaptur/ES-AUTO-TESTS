@@ -48,7 +48,7 @@ public class FooterSteps {
     }
 
     @Then("^main page should be open$")
-    public void mainPageShouldBeOpen() throws Throwable {
+    public void mainPageShouldBeOpen() {
         pageWithShouldBeOpen(mainPageUrl);
     }
 

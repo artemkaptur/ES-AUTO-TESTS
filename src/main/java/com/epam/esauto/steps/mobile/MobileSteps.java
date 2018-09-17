@@ -14,7 +14,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class MobileSteps {
 
-    private final int CUSTOM_WAIT = 20000;
+    private static final int CUSTOM_WAIT = 20000;
 
     @Value("${download.read.button.xpath}")
     private String downloadReadButtonClassName;
