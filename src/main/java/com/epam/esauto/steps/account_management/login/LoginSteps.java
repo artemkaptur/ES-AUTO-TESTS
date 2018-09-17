@@ -50,6 +50,10 @@ public class LoginSteps {
     @When("^I login as a user \"([^\"]*)\"$")
     public void iLoginAsAUser(String userName) {
         iSubmitLoginFormAsAUser(userName);
+        closeLoginForm();
+    }
+
+    private void closeLoginForm() {
         $(By.xpath(loginWelcomingMsgXpath)).waitUntil(visible, TRIPLE_DEFAULT_TIMEOUT)
                 .shouldHave(text("You are currently logged in, click here to log out"));
         getWebDriver().close();
@@ -79,6 +83,7 @@ public class LoginSteps {
         $(By.xpath(emailInputXpath)).setValue(user.getEsLogin());
         $(By.name(passwInputName)).setValue(user.getEsPassword());
         $(By.className(loginSubmitBtnClass)).click();
+        closeLoginForm();
     }
 
     @And("^enter email of user \"([^\"]*)\"$")
