@@ -6,7 +6,7 @@ Feature: Evening standard registration positive tests
   Background:
     Given I open the main page
     Given I click register button
-
+    
   Scenario: I can register
     When  I fill registration form with random email, "John", "Smith"
     And   fill registration form mandatory fields with:
@@ -15,6 +15,7 @@ Feature: Evening standard registration positive tests
       | gender    | Male     |
       | password  | test7890 |
     Then  successful registration message should be shown
+    And  click logout button
     And  I open login form
     And  I login as a user registrationPositiveTestUser
     Then  click logout button
