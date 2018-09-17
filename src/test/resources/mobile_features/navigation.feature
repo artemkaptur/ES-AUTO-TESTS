@@ -3,7 +3,6 @@ Feature: Navigation Feature
 
   Background: I open ES Application
     Given I launch Standard app
-    Given I close intro slideshow
 
   # As a user 
   # I want to download magazine 
@@ -27,6 +26,7 @@ Feature: Navigation Feature
     Then I see label "Downloading"
     And I click button "CANCEL"
     Then I not see label "Downloading"
+    And I click button 'home' 
     Examples:
       | section          |
       | EDITIONS         |
@@ -35,12 +35,15 @@ Feature: Navigation Feature
 
   # As a user
   # I want to read downloaded magazine
-  # Then I download magazine
-  @pending
-  Scenario: I can turn pages by swiping left and right
-    When I open section "<section>"
-    And click button "Read" under downloaded edition
-    Then I can read the edition and turn pages by swiping left and right
+  # Then I download magazine i see list of all pages and button 'read'
+  Scenario: Button "Read" appears when the magazine is downloaded
+    When I open section "EDITION"
+    When click button "Download"
+    Then I see label "Downloading"
+    When button "CANCEL" disappears i click button 'home'
+    Then I can see list of all pages
+    And I click button 'home'
+    Then I see button "Read"
 
   # As a user
   # I want to see list of all pages and pick any

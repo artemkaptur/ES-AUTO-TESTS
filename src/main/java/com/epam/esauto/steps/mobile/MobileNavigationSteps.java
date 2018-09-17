@@ -14,11 +14,23 @@ import cucumber.api.java.en.When;
 
 public class MobileNavigationSteps {
 
+	private static final long MOBILE_LOAD_ACTIVITY_WAIT = 60000;
+	private static final long MOBILE_LOAD_MAGAZINE_WAIT = 10000;
+
 	@Value("${sectionLinks.xpath}")
 	private String sectionLinks;
 
 	@Value("${documentActionButton.id}")
 	private String documentActionButton;
+
+	@Value("${buttonHome.xpath}")
+	private String buttonHome;
+
+	@Value("${menuOfMagazine.xpath}")
+	private String menuOfMagazine;
+
+	@Value("${buttonRead.xpath}")
+	private String buttonRead;
 
 	@When("^I open section \"([^\"]*)\"$")
 	public void iOpenSection(String section) {
@@ -50,4 +62,26 @@ public class MobileNavigationSteps {
 		$(By.id(documentActionButton)).shouldNotHave(Condition.text(nameOfButton));
 	}
 
-}
+	@When("^button \"([^\"]*)\" disappears i click button 'home'$")
+	public void buttonCancelDisappearsIClickButttonHome(String nameOfButton) {
+		$$(By.id(documentActionButton)).find(Condition.text(nameOfButton)).waitUntil(Condition.disappear,
+				MOBILE_LOAD_ACTIVITY_WAIT);
+		$(By.xpath(buttonHome)).click();
+	}
+
+	@Then("^I can see list of all pages$")
+	public void iCanSeeListOfAllPages() {
+		$(By.xpath(menuOfMagazine)).waitUntil(Condition.appear, MOBILE_LOAD_MAGAZINE_WAIT).shouldBe(Condition.visible);
+	}
+
+	@Then("^I click button 'home'$")
+	public void iClickButtonHome() {
+		$(By.xpath(buttonHome)).click();
+	}
+
+	@Then("^I see button \"([^\"]*)\"$")
+	public void iSeeButton(String arg1) {
+		$(By.xpath(buttonRead)).shouldBe(Condition.visible);
+	}
+
+}
