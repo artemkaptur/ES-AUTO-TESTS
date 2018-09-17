@@ -28,8 +28,8 @@ import static org.openqa.selenium.remote.CapabilityType.PLATFORM_NAME;
 @ContextConfiguration(classes = AppConfig.class)
 public class MobileMainSteps {
 
-    private static final long INSTALL_WAIT = 45000;
-    private static final long MOBILE_LOAD_ACTIVITY_WAIT = 10000;
+    private static final long INSTALL_WAIT = 60000;
+    private static final long MOBILE_LOAD_ACTIVITY_WAIT = 20000;
     private static final String PLATFORM_VERSION = "platformVersion";
     private static final String ES_APP_NAME = "Evening Standard";
 
@@ -103,7 +103,7 @@ public class MobileMainSteps {
         $(By.id(playMarketSearchInputId)).setValue(ES_APP_NAME);
         ((AndroidDriver) WebDriverRunner.getWebDriver()).pressKey(new KeyEvent(AndroidKey.ENTER));
         $(By.xpath(playMarketESAppXpath)).click();
-        $(By.xpath(playMarketInstallButtonXpath)).click();
+        $(By.xpath(playMarketInstallButtonXpath)).waitUntil(Condition.visible, MOBILE_LOAD_ACTIVITY_WAIT).click();
         $(By.xpath(playMarketOpenButtonXpath)).waitUntil(Condition.visible, INSTALL_WAIT);
         driver.closeApp();
     }
