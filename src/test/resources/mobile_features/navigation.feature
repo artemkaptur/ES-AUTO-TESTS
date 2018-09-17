@@ -3,7 +3,7 @@ Feature: Navigation Feature
 
   Background: I open ES Application
     Given I launch Standard app
-    When I close intro slideshow
+    Given I close intro slideshow
 
   # As a user 
   # I want to download magazine 
@@ -92,7 +92,7 @@ Feature: Navigation Feature
     When I open section "Latest news"
     And choose subsection
       | Football |
-    Then I can swipe right and left to see all availabale articles
+    Then I can swipe right and left to see all available articles
 
   # As a user
   # I want to open every article
@@ -114,3 +114,13 @@ Feature: Navigation Feature
       | EDITIONS         |
       | ES MAGAZINE      |
       | HOMES & PROPERTY |
+
+  # As a user
+  # I want to go to section "Latest news" by clicking "Live" button
+  @pending
+    @lol
+  Scenario: I can go to section "Latest news" by clicking "Live" button
+    Given open Editions section
+    And download edition
+    When I click Live button
+    Then I go to Latest news section
