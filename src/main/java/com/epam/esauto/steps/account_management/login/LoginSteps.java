@@ -1,9 +1,12 @@
 package com.epam.esauto.steps.account_management.login;
 
+import com.epam.esauto.entity.User;
+import com.epam.esauto.util.DataHolder;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import static com.codeborne.selenide.Condition.text;
@@ -12,10 +15,13 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.epam.esauto.entity.UserProvider.getUser;
-import static com.epam.esauto.util.DataHolder.getRegistrationPositiveTestUser;
 
 public class LoginSteps {
     private static final int TRIPLE_DEFAULT_TIMEOUT = 12000;
+    private static final String USER_TEST_NAME_SECOND = "registrationPositiveTestUserSecond";
+
+    @Autowired
+    private DataHolder dataHolder;
 
     @Value("${loginPage.email.input.xpath}")
     private String emailInputXpath;
@@ -69,8 +75,9 @@ public class LoginSteps {
 
     @And("^I login as a user registrationPositiveTestUser$")
     public void iLoginAsAUserRegistrationPositiveTestUser() {
-        $(By.xpath(emailInputXpath)).setValue(getRegistrationPositiveTestUser().getEsLogin());
-        $(By.name(passwInputName)).setValue(getRegistrationPositiveTestUser().getEsPassword());
+        User user = (User) dataHolder.getByKey(USER_TEST_NAME_SECOND);
+        $(By.xpath(emailInputXpath)).setValue(user.getEsLogin());
+        $(By.name(passwInputName)).setValue(user.getEsPassword());
         $(By.className(loginSubmitBtnClass)).click();
     }
 

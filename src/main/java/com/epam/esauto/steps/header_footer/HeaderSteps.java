@@ -10,7 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Condition.attribute;
@@ -154,16 +154,16 @@ public class HeaderSteps {
         $(By.xpath(mainLogoHPXpath)).click();
     }
 
-    @Then("^main menu item number \"([^\"]*)\" \"([^\"]*)\" contains list of sub-menus and they have valid href$")
-    public void mainMenuItemNumberContainsListOfSubMenusAndTheyHaveValidHref(String menuNumber, String menuItem, Map<String, String> subMenus) {
+    @And("^\"([^\"]*)\" item number \"([^\"]*)\" \"([^\"]*)\" contains list of sub-menus and they have valid href$")
+    public void mainMenuItemNumberContainsListOfSubMenusAndTheyHaveValidHref(String className, String menuNumber, String menuItem, Map<String, String> subMenus) {
         Map<String, String> subMenuInfo = $(By.xpath(String.format(
-                "//nav[@class='main-menu']//a[@title='%s']", menuItem)))
+                "//nav[@class='%s']//a[@title='%s']",className, menuItem)))
                 .hover()
-                .$$(By.xpath(String.format("//nav[@class='main-menu']/ul/li[%s]/ul/li/div/a", menuNumber)))
+                .$$(By.xpath(String.format("//nav[@class='%s']/ul/li[%s]/ul/li/div/a",className, menuNumber)))
                 .stream()
                 .map(el -> Pair.of(el.getAttribute(ATTRIBUTE_TITLE), el.getAttribute(ATTRIBUTE_HREF).replace(mainPageUrl, "")))
                 .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
-        assertEquals(subMenus, subMenuInfo);
+        assertEquals(StepUtils.sortMap(subMenus), StepUtils.sortMap(subMenuInfo));
     }
 
     @Then("^ESMagazine section should have valid href \"([^\"]*)\"$")
